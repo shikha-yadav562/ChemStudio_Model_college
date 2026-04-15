@@ -1,8 +1,7 @@
-
-import 'package:ChemStudio/screens/WET_TEST/D_WET/d_intro.dart';
-import 'package:ChemStudio/screens/WET_TEST/D_WET/group_5/group5_BA_ct.dart';
-import 'package:ChemStudio/screens/WET_TEST/D_WET/group_5/group5_CA_ct.dart';
-import 'package:ChemStudio/screens/WET_TEST/D_WET/group_5/group5_SR_ct.dart';
+import 'package:chemstudio/screens/WET_TEST/D_WET/d_intro.dart';
+import 'package:chemstudio/screens/WET_TEST/D_WET/group_5/group5_BA_ct.dart';
+import 'package:chemstudio/screens/WET_TEST/D_WET/group_5/group5_CA_ct.dart';
+import 'package:chemstudio/screens/WET_TEST/D_WET/group_5/group5_SR_ct.dart';
 import 'package:flutter/material.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
@@ -39,9 +38,9 @@ class _Analysis_BA_SR_CAState extends State<Analysis_BA_SR_CA> {
           },
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue])
-                  .createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt D : Wet Test',
             style: TextStyle(
@@ -70,10 +69,10 @@ class _Analysis_BA_SR_CAState extends State<Analysis_BA_SR_CA> {
       children: [
         Text(
           "Analysis Group V",
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            color: primaryBlue,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 12),
 
@@ -103,21 +102,21 @@ class _Analysis_BA_SR_CAState extends State<Analysis_BA_SR_CA> {
         onNextPressed = () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const Group5CTBaScreen ()),
+            MaterialPageRoute(builder: (_) => const Group5CTBaScreen()),
           );
         };
       } else if (selectedOption == "Ca²⁺ present") {
         onNextPressed = () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const Group5CTCaScreen ()),
+            MaterialPageRoute(builder: (_) => const Group5CTCaScreen()),
           );
         };
       } else if (selectedOption == "Sr²⁺ present") {
         onNextPressed = () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const Group5CTSrScreen ()),
+            MaterialPageRoute(builder: (_) => const Group5CTSrScreen()),
           );
         };
       }
@@ -133,25 +132,20 @@ class _Analysis_BA_SR_CAState extends State<Analysis_BA_SR_CA> {
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           ),
           icon: const Icon(Icons.arrow_back, size: 20),
-          label: const Text(
-            'Previous',
-            style: TextStyle(fontSize: 16),
-          ),
+          label: const Text('Previous', style: TextStyle(fontSize: 16)),
         ),
         ElevatedButton.icon(
           onPressed: onNextPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor:
-                selectedOption != null ? primaryBlue : Colors.grey.shade400,
+            backgroundColor: selectedOption != null
+                ? primaryBlue
+                : Colors.grey.shade400,
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             shape: const StadiumBorder(),
           ),
           icon: const Icon(Icons.arrow_forward, size: 20),
-          label: const Text(
-            'Next',
-            style: TextStyle(fontSize: 16),
-          ),
+          label: const Text('Next', style: TextStyle(fontSize: 16)),
         ),
       ],
     );
@@ -260,8 +254,7 @@ class _Analysis_BA_SR_CAState extends State<Analysis_BA_SR_CA> {
             style: TextStyle(
               fontSize: 15,
               color: selected ? accentTeal : Colors.black,
-              fontWeight:
-                  selected ? FontWeight.bold : FontWeight.normal,
+              fontWeight: selected ? FontWeight.bold : FontWeight.normal,
             ),
           ),
         ),
@@ -273,9 +266,9 @@ class _Analysis_BA_SR_CAState extends State<Analysis_BA_SR_CA> {
 
   Widget _gradientTitle(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(
@@ -305,12 +298,10 @@ class GradientText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShaderMask(
-      shaderCallback: (bounds) => gradient
-          .createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-      child: Text(
-        text,
-        style: style.copyWith(color: Colors.white),
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
+      child: Text(text, style: style.copyWith(color: Colors.white)),
     );
   }
 }

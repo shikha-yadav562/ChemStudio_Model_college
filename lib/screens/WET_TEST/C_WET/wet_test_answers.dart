@@ -1,5 +1,5 @@
 // wet_test_answers.dart
-import 'package:ChemStudio/models/group_status.dart';
+import 'package:chemstudio/models/group_status.dart';
 
 class ConfirmatoryTest {
   final String ion;
@@ -19,11 +19,10 @@ const Map<int, GroupStatus> wetTestGroups = {
   1: GroupStatus.absent,
   2: GroupStatus.absent,
   3: GroupStatus.present,
-  4: GroupStatus.absent,   
-  5: GroupStatus.present,  
-  6: GroupStatus.absent, 
+  4: GroupStatus.absent,
+  5: GroupStatus.present,
+  6: GroupStatus.absent,
 };
-
 
 // -------------------- Confirmatory Test Answers --------------------
 const Map<String, ConfirmatoryTest> wetTestCTAnswers = {
@@ -32,31 +31,31 @@ const Map<String, ConfirmatoryTest> wetTestCTAnswers = {
     observation: "Brown ppt/colouration of basic mercury (II) amidoiodine",
     correctOption: "NH₄⁺ Confirmed",
   ),
-  
+
   "Pb2+": ConfirmatoryTest(
     ion: "Pb2+",
     observation: "Yellow Precipitate",
     correctOption: "Pb²⁺ Confirmed",
   ),
-  
+
   "Cu2+": ConfirmatoryTest(
     ion: "Cu2+",
     observation: "White ppt in brown coloured solution",
     correctOption: "Cu²⁺ confirmed",
   ),
-  
+
   "As3+": ConfirmatoryTest(
     ion: "As3+",
     observation: "Yellow ppt",
     correctOption: "As³⁺ confirmed",
   ),
-  
+
   "Fe3+": ConfirmatoryTest(
     ion: "Fe3+",
     observation: "Prussian blue ppt or colour",
     correctOption: "Fe³⁺ confirmed",
   ),
-  
+
   "Al3+": ConfirmatoryTest(
     ion: "Al3+",
     observation: "White gelatinous ppt (Soluble in excess NaOH)",

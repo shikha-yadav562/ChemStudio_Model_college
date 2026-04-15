@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ChemStudio/screens/WET_TEST/C_WET/group0/group0analysis.dart';
-import 'package:ChemStudio/DB/database_helper.dart'; // ⚠️ TEMPORARY: Added for database reset
+import 'package:chemstudio/screens/WET_TEST/C_WET/group0/group0analysis.dart';
+import 'package:chemstudio/DB/database_helper.dart'; // ⚠️ TEMPORARY: Added for database reset
 import '../../welcome_screen.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
@@ -79,7 +79,6 @@ class WetTestIntroCScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             // ⚠️ TEMPORARY: Warning banner - REMOVE AFTER TESTING
             Container(
               padding: const EdgeInsets.all(12),
@@ -91,7 +90,10 @@ class WetTestIntroCScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.warning_amber_rounded, color: Colors.orange.shade800),
+                  Icon(
+                    Icons.warning_amber_rounded,
+                    color: Colors.orange.shade800,
+                  ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
@@ -133,10 +135,7 @@ class WetTestIntroCScreen extends StatelessWidget {
 
             const Text(
               "Get ready to prepare your Original Solution (O.S.) and analyze cation groups.",
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black54,
-              ),
+              style: TextStyle(fontSize: 15, color: Colors.black54),
               textAlign: TextAlign.center,
             ),
 
@@ -174,10 +173,7 @@ class WetTestIntroCScreen extends StatelessWidget {
 
                   const Text(
                     "Preparation   →   Group Analysis   →   Confirmatory Tests",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.black54,
-                    ),
+                    style: TextStyle(fontSize: 13, color: Colors.black54),
                   ),
                 ],
               ),
@@ -186,78 +182,75 @@ class WetTestIntroCScreen extends StatelessWidget {
             const SizedBox(height: 35),
 
             // ------------------ FIRST CARD ------------------
-          _infoCard(
-  icon: Icons.opacity_rounded,
-  title: "(C) PREPARATION OF ORIGINAL SOLUTION (O.S.)",
-  content: const Text(
-    "Take a small quantity of mixture into a beaker and add two test tubes (20 mL) of water. "
-    "Stir with a glass rod to dissolve the mixture. "
-    "If the mixture does not dissolve completely, then warm it gently until a clear solution is obtained. "
-    "This clear solution is used as the O.S. for further tests.",
-    style: TextStyle(
-      fontSize: 15,
-      height: 1.45,
-      color: Colors.black87,
-    ),
-  ),
-),
-
+            _infoCard(
+              icon: Icons.opacity_rounded,
+              title: "(C) PREPARATION OF ORIGINAL SOLUTION (O.S.)",
+              content: const Text(
+                "Take a small quantity of mixture into a beaker and add two test tubes (20 mL) of water. "
+                "Stir with a glass rod to dissolve the mixture. "
+                "If the mixture does not dissolve completely, then warm it gently until a clear solution is obtained. "
+                "This clear solution is used as the O.S. for further tests.",
+                style: TextStyle(
+                  fontSize: 15,
+                  height: 1.45,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
 
             const SizedBox(height: 25),
 
             // ------------------ SECOND CARD ------------------
             _infoCard(
-  icon: Icons.science_outlined,
-  title: "(D) DETECTION AND ANALYSIS OF GROUPS",
-  content: RichText(
-    text: const TextSpan(
-      style: TextStyle(
-        fontSize: 15,
-        height: 1.45,
-        color: Colors.black87,
-      ),
-      children: [
-        TextSpan(
-          text:
-              "Two groups must be detected for two basic radicals.\n"
-              "Follow the sequence from Group 0 to Group VI.\n\n",
-              style: TextStyle(fontWeight: FontWeight.bold),
-              
-        ),
-        TextSpan(
-          text: "(1) If Group 0 is present:\n",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        TextSpan(
-          text: "Detect one group from Group I–VI.\n\n",
-          style: TextStyle(color: Colors.red),
-        ),
-        TextSpan(
-          text: "(2) If Group 0 is absent:\n",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        TextSpan(text: "(i) "),
-        TextSpan(
-          text: "Detect two groups from Group I–VI.\n",
-          style: TextStyle(color: Colors.red),
-        ),
-        TextSpan(
-          text:
-              "(ii) Add group reagents till first radical is completely precipitated.\n"
-              "(iii) Filter the solution (boil to remove H₂S if Group II or IV present).\n"
-              "(iv) With residue, perform confirmatory test for the first radical.\n"
-              "(v) With filtrate, continue analysis for the second radical.",
-        ),
-      ],
-    ),
-  ),
-),
+              icon: Icons.science_outlined,
+              title: "(D) DETECTION AND ANALYSIS OF GROUPS",
+              content: RichText(
+                text: const TextSpan(
+                  style: TextStyle(
+                    fontSize: 15,
+                    height: 1.45,
+                    color: Colors.black87,
+                  ),
+                  children: [
+                    TextSpan(
+                      text:
+                          "Two groups must be detected for two basic radicals.\n"
+                          "Follow the sequence from Group 0 to Group VI.\n\n",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                      text: "(1) If Group 0 is present:\n",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                      text: "Detect one group from Group I–VI.\n\n",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                      text: "(2) If Group 0 is absent:\n",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(text: "(i) "),
+                    TextSpan(
+                      text: "Detect two groups from Group I–VI.\n",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    TextSpan(
+                      text:
+                          "(ii) Add group reagents till first radical is completely precipitated.\n"
+                          "(iii) Filter the solution (boil to remove H₂S if Group II or IV present).\n"
+                          "(iv) With residue, perform confirmatory test for the first radical.\n"
+                          "(v) With filtrate, continue analysis for the second radical.",
+                    ),
+                  ],
+                ),
+              ),
+            ),
 
             const SizedBox(height: 30),
 
             // ⚠️ TEMPORARY: Reset button (alternative placement) - REMOVE AFTER TESTING
             // Uncomment this if you prefer a prominent button instead of AppBar icon
-            
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
@@ -265,7 +258,10 @@ class WetTestIntroCScreen extends StatelessWidget {
                 icon: const Icon(Icons.refresh, color: Colors.red),
                 label: const Text(
                   'Reset Database (Testing Only)',
-                  style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
@@ -277,7 +273,7 @@ class WetTestIntroCScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 15),
-            
+
             // ⚠️ END TEMPORARY SECTION
 
             // ------------------ NEXT BUTTON ------------------
@@ -287,7 +283,9 @@ class WetTestIntroCScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => WetTestCGroupZeroScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => WetTestCGroupZeroScreen(),
+                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -341,50 +339,46 @@ class WetTestIntroCScreen extends StatelessWidget {
       color: Colors.grey.shade300,
     );
   }
-// ------------------ INFO CARD ------------------
-Widget _infoCard({
-  required IconData icon,
-  required String title,
-  required Widget content,
-}) {
-  return Container(
-    padding: const EdgeInsets.all(20),
-    width: double.infinity,
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(22),
-      boxShadow: const [
-        BoxShadow(
-          color: Colors.black12,
-          blurRadius: 7,
-          offset: Offset(0, 3),
-        ),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(icon, color: Color(0xFF00AABD), size: 30),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF005B84),
+
+  // ------------------ INFO CARD ------------------
+  Widget _infoCard({
+    required IconData icon,
+    required String title,
+    required Widget content,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 7, offset: Offset(0, 3)),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: Color(0xFF00AABD), size: 30),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF005B84),
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        content,
-      ],
-    ),
-  );
-}
-
+            ],
+          ),
+          const SizedBox(height: 12),
+          content,
+        ],
+      ),
+    );
+  }
 }

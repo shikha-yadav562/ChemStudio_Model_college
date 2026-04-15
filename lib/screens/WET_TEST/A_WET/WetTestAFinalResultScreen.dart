@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/models/group_status.dart';
-import 'package:ChemStudio/screens/WET_TEST/A_WET/A_wet_test_answers.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/models/group_status.dart';
+import 'package:chemstudio/screens/WET_TEST/A_WET/A_wet_test_answers.dart';
 
 /// ===============================================================
 /// FINAL RESULT SCREEN FOR MODULE A
@@ -16,8 +16,7 @@ class WetTestAFinalResultScreen extends StatefulWidget {
       _WetTestAFinalResultScreenState();
 }
 
-class _WetTestAFinalResultScreenState
-    extends State<WetTestAFinalResultScreen> {
+class _WetTestAFinalResultScreenState extends State<WetTestAFinalResultScreen> {
   bool isLoading = true;
 
   Map<int, GroupStatus> studentGroups = {};
@@ -25,13 +24,13 @@ class _WetTestAFinalResultScreenState
 
   // ✅ Define which ion is CORRECT for each group (Module A)
   final Map<int, String> correctIonsPerGroup = {
-    0: 'NH4+',  // ✅ Only NH4+ is correct for Group 0
+    0: 'NH4+', // ✅ Only NH4+ is correct for Group 0
     1: 'Pb2+',
-    2: 'Cu2+',  // ✅ Only Cu2+ is correct for Group 2
-    3: 'Fe3+', 
+    2: 'Cu2+', // ✅ Only Cu2+ is correct for Group 2
+    3: 'Fe3+',
     4: 'Ni2+',
-    5: 'Ba2+',  
-    6: 'Mg2+', 
+    5: 'Ba2+',
+    6: 'Mg2+',
   };
 
   final List<Map<String, dynamic>> ctTests = [
@@ -58,8 +57,9 @@ class _WetTestAFinalResultScreenState
   }
 
   Future<void> _loadData() async {
-    studentGroups =
-        await DatabaseHelper.instance.getStudentGroupDecisions(widget.salt);
+    studentGroups = await DatabaseHelper.instance.getStudentGroupDecisions(
+      widget.salt,
+    );
 
     await _identifySelectedIons();
 
@@ -117,8 +117,7 @@ class _WetTestAFinalResultScreenState
 
     if (studentAnswer == null || correct == null) return false;
 
-    return studentAnswer.trim().toLowerCase() ==
-        correct.trim().toLowerCase();
+    return studentAnswer.trim().toLowerCase() == correct.trim().toLowerCase();
   }
 
   String formatIon(String ion) {
@@ -161,8 +160,7 @@ class _WetTestAFinalResultScreenState
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            const Icon(Icons.check_circle,
-                size: 100, color: Color(0xFF00897B)),
+            const Icon(Icons.check_circle, size: 100, color: Color(0xFF00897B)),
             const SizedBox(height: 24),
             const Text(
               'The given inorganic mixture contains the\nfollowing cations:',
@@ -173,8 +171,7 @@ class _WetTestAFinalResultScreenState
 
             /// ================= ION CARDS =================
             ...selectedIons.map((ion) {
-              final ct =
-                  ctTests.firstWhere((element) => element['ion'] == ion);
+              final ct = ctTests.firstWhere((element) => element['ion'] == ion);
 
               return FutureBuilder<bool>(
                 future: isCTCorrect(
@@ -188,7 +185,9 @@ class _WetTestAFinalResultScreenState
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
                     padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 24),
+                      vertical: 20,
+                      horizontal: 24,
+                    ),
                     decoration: BoxDecoration(
                       color: isCorrect
                           ? const Color(0xFFE8F5E9)
@@ -230,8 +229,7 @@ class _WetTestAFinalResultScreenState
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                icon: const Icon(Icons.arrow_back,
-                    color: Color(0xFF00897B)),
+                icon: const Icon(Icons.arrow_back, color: Color(0xFF00897B)),
                 label: const Text(
                   'BACK',
                   style: TextStyle(
@@ -243,10 +241,8 @@ class _WetTestAFinalResultScreenState
                   Navigator.pop(context);
                 },
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(
-                      color: Color(0xFF00897B), width: 2),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 18),
+                  side: const BorderSide(color: Color(0xFF00897B), width: 2),
+                  padding: const EdgeInsets.symmetric(vertical: 18),
                 ),
               ),
             ),

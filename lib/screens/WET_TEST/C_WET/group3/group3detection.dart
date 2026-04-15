@@ -1,10 +1,10 @@
 // E:\flutter chemistry\wet\wet\lib\C\group3\group3detection.dart
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/models/group_status.dart';
-import 'package:ChemStudio/screens/WET_TEST/C_WET/group_4/group4_detection.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/models/group_status.dart';
+import 'package:chemstudio/screens/WET_TEST/C_WET/group_4/group4_detection.dart';
 import 'package:flutter/material.dart';
-import 'package:ChemStudio/screens/WET_TEST/C_WET/group0/group0analysis.dart';
- // DatabaseHelper, WetTestItem, etc.
+import 'package:chemstudio/screens/WET_TEST/C_WET/group0/group0analysis.dart';
+// DatabaseHelper, WetTestItem, etc.
 import '../c_intro.dart';
 import 'group3analysis.dart';
 
@@ -32,11 +32,11 @@ class WetTestCGroupThreeDetectionScreen extends StatefulWidget {
       _WetTestCGroupThreeDetectionScreenState();
 }
 
-class _WetTestCGroupThreeDetectionScreenState extends State<WetTestCGroupThreeDetectionScreen>
+class _WetTestCGroupThreeDetectionScreenState
+    extends State<WetTestCGroupThreeDetectionScreen>
     with SingleTickerProviderStateMixin {
-    
-  String? _selectedOption; 
-  
+  String? _selectedOption;
+
   late final AnimationController _animController;
   late final Animation<double> _fadeSlide;
 
@@ -46,7 +46,8 @@ class _WetTestCGroupThreeDetectionScreenState extends State<WetTestCGroupThreeDe
   late final WetTestItem _test = WetTestItem(
     id: 10,
     title: 'Group III Detection',
-    procedure: 'O.S/Filtrate (Remove H₂S) + NH₄Cl (equal) + NH₄OH ( till alkaline to litmus )',
+    procedure:
+        'O.S/Filtrate (Remove H₂S) + NH₄Cl (equal) + NH₄OH ( till alkaline to litmus )',
     observation: 'White gelatineous ppt or reddish brown ppt',
     options: ['Group-III is present', 'Group-III is Absent'],
     correct: 'Group-III is present',
@@ -59,7 +60,10 @@ class _WetTestCGroupThreeDetectionScreenState extends State<WetTestCGroupThreeDe
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswers();
     _animController.forward();
   }
@@ -70,7 +74,9 @@ class _WetTestCGroupThreeDetectionScreenState extends State<WetTestCGroupThreeDe
     setState(() {
       final testId = _test.id;
       final match = data.where((row) => row['question_id'] == testId);
-      final savedAnswer = match.isNotEmpty ? match.first['student_answer'] : null;
+      final savedAnswer = match.isNotEmpty
+          ? match.first['student_answer']
+          : null;
       _selectedOption = savedAnswer; // ✅ FIXED: Added this line
     });
   }
@@ -80,38 +86,32 @@ class _WetTestCGroupThreeDetectionScreenState extends State<WetTestCGroupThreeDe
       _selectedOption = selected;
     });
 
-    await _dbHelper.saveStudentAnswer(
-      _tableName,
-      test.id,
-      selected,
-    );
+    await _dbHelper.saveStudentAnswer(_tableName, test.id, selected);
   }
 
+  void _next() async {
+    if (_selectedOption == 'Group-III is present') {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const WetTestCGroupThreeAnalysisScreen(),
+        ),
+      );
+    } else if (_selectedOption == 'Group-III is Absent') {
+      // ✅ ADD THIS: Mark Group 2 as absent before navigating
+      await _dbHelper.insertGroupDecision(
+        salt: 'C',
+        groupNumber: 3,
+        status: GroupStatus.absent,
+      );
 
-void _next() async {
-  if (_selectedOption == 'Group-III is present') {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const WetTestCGroupThreeAnalysisScreen(),
-      ),
-    );
-  } else if (_selectedOption == 'Group-III is Absent') {
-    // ✅ ADD THIS: Mark Group 2 as absent before navigating
-    await _dbHelper.insertGroupDecision(
-      salt: 'C',
-      groupNumber:3,
-      status: GroupStatus.absent,
-    );
-    
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const Group4DetectionScreen(),
-      ),
-    );
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const Group4DetectionScreen()),
+      );
+    }
   }
-}
+
   void _prev() {
     if (Navigator.canPop(context)) {
       Navigator.pop(context);
@@ -126,13 +126,16 @@ void _next() async {
 
   Widget _buildGradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
       ),
     );
   }
@@ -182,15 +185,17 @@ void _next() async {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const WetTestIntroCScreen()),
+              MaterialPageRoute(
+                builder: (context) => const WetTestIntroCScreen(),
+              ),
               (route) => false,
             );
           },
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue])
-                  .createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt C : Wet Test',
             style: TextStyle(
@@ -204,19 +209,22 @@ void _next() async {
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position:
-              Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-                  .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(test.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold)),
+                Text(
+                  test.title,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView(
@@ -283,7 +291,9 @@ void _next() async {
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 12),
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],

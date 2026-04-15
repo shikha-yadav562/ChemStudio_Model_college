@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ChemStudio/screens/WET_TEST/D_WET/group0/group0analysis.dart'; // ⚠️ TEMPORARY: Added for database reset
+import 'package:chemstudio/screens/WET_TEST/D_WET/group0/group0analysis.dart'; // ⚠️ TEMPORARY: Added for database reset
 import '../../welcome_screen.dart';
-import 'package:ChemStudio/DB/database_helper.dart'; // ⚠️ TEMPORARY: Added for database reset
+import 'package:chemstudio/DB/database_helper.dart'; // ⚠️ TEMPORARY: Added for database reset
 
 const Color primaryBlue = Color(0xFF004C91);
 

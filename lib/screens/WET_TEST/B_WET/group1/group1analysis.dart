@@ -1,9 +1,9 @@
 // E:\flutter chemistry\wet\wet\lib\C\group1\group1analysis.dart
 
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/b_intro.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/group0/group0analysis.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/group1/group1ct_pb2plus.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/b_intro.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/group0/group0analysis.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/group1/group1ct_pb2plus.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
@@ -11,26 +11,24 @@ import 'package:flutter/material.dart';
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
 
-// FIX: Re-defining the extension method here. 
-// NOTE: To prevent future name collisions, ensure this extension is NOT defined 
+// FIX: Re-defining the extension method here.
+// NOTE: To prevent future name collisions, ensure this extension is NOT defined
 // in group1detection.dart, group2detection.dart, or group1ct_pb2plus.dart.
-
-
 
 class WetTestBGroupOneAnalysisScreen extends StatefulWidget {
   const WetTestBGroupOneAnalysisScreen({super.key});
 
   @override
-  State<WetTestBGroupOneAnalysisScreen> createState() => 
+  State<WetTestBGroupOneAnalysisScreen> createState() =>
       _WetTestBGroupOneAnalysisScreenState();
 }
 
-class _WetTestBGroupOneAnalysisScreenState extends State<WetTestBGroupOneAnalysisScreen>
+class _WetTestBGroupOneAnalysisScreenState
+    extends State<WetTestBGroupOneAnalysisScreen>
     with SingleTickerProviderStateMixin {
-  
-  final int _index = 0; 
-  String? _selectedOption; 
-  
+  final int _index = 0;
+  String? _selectedOption;
+
   late final AnimationController _animController;
   late final Animation<double> _fadeSlide;
 
@@ -57,8 +55,10 @@ class _WetTestBGroupOneAnalysisScreenState extends State<WetTestBGroupOneAnalysi
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide =
-        CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswers();
     _animController.forward();
   }
@@ -70,28 +70,29 @@ class _WetTestBGroupOneAnalysisScreenState extends State<WetTestBGroupOneAnalysi
       final testId = _tests[_index].id;
       // .firstWhereOrNull is now available
       final savedAnswer = data.firstWhereOrNull(
-          (row) => row['question_id'] == testId)?['student_answer'];
+        (row) => row['question_id'] == testId,
+      )?['student_answer'];
       _selectedOption = savedAnswer;
     });
   }
 
-Future<void> _onOptionSelected(WetTestItem test, String selected) async {
-  setState(() => _selectedOption = selected);
+  Future<void> _onOptionSelected(WetTestItem test, String selected) async {
+    setState(() => _selectedOption = selected);
 
-  // Only save student answer - NO correct answer saving here
-  await _dbHelper.saveStudentAnswer(_tableName, test.id, selected);
-}
+    // Only save student answer - NO correct answer saving here
+    await _dbHelper.saveStudentAnswer(_tableName, test.id, selected);
+  }
 
-
- void _next() async {
-  // Navigate to the Confirmation Test for the detected ion (Pb²⁺).
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (_) => const WetTestBGroupOneCTScreen(), // ✅ CORRECT CLASS NAME
-    ),
-  );
-}
+  void _next() async {
+    // Navigate to the Confirmation Test for the detected ion (Pb²⁺).
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) =>
+            const WetTestBGroupOneCTScreen(), // ✅ CORRECT CLASS NAME
+      ),
+    );
+  }
 
   void _prev() {
     // Navigate back to the Group II Detection screen (WetTestCGroupOneDetectionScreen)
@@ -109,7 +110,7 @@ Future<void> _onOptionSelected(WetTestItem test, String selected) async {
   @override
   Widget build(BuildContext context) {
     final test = _tests[_index];
-    
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -117,19 +118,21 @@ Future<void> _onOptionSelected(WetTestItem test, String selected) async {
         elevation: 2,
         centerTitle: true,
         leading: IconButton(
-    icon: const Icon(Icons.arrow_back, color: primaryBlue),
-    onPressed: () {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const WetTestIntroBScreen()), // Replace with your actual class name in c_intro.dart
-        (route) => false, // This clears the navigation stack
-      );
-    },
-  ),
+          icon: const Icon(Icons.arrow_back, color: primaryBlue),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WetTestIntroBScreen(),
+              ), // Replace with your actual class name in c_intro.dart
+              (route) => false, // This clears the navigation stack
+            );
+          },
+        ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue])
-                  .createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt B : Wet Test',
             style: TextStyle(
@@ -143,19 +146,22 @@ Future<void> _onOptionSelected(WetTestItem test, String selected) async {
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position:
-              Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-                  .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(test.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold)),
+                Text(
+                  test.title,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView(
@@ -171,8 +177,8 @@ Future<void> _onOptionSelected(WetTestItem test, String selected) async {
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: InkWell(
                             onTap: () async {
-  await _onOptionSelected(test, opt);
-},
+                              await _onOptionSelected(test, opt);
+                            },
 
                             borderRadius: BorderRadius.circular(8),
                             child: AnimatedContainer(
@@ -225,7 +231,9 @@ Future<void> _onOptionSelected(WetTestItem test, String selected) async {
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 12),
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],
@@ -240,9 +248,9 @@ Future<void> _onOptionSelected(WetTestItem test, String selected) async {
 
   Widget _buildInferenceHeader() {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: const Text(
         'Select the correct inference:',
         style: TextStyle(
@@ -286,13 +294,16 @@ Future<void> _onOptionSelected(WetTestItem test, String selected) async {
 
   Widget _gradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
       ),
     );
   }

@@ -1,11 +1,11 @@
-import 'package:ChemStudio/DB/database_helper.dart';
+import 'package:chemstudio/DB/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'group4_Ni_ct.dart';
 import 'group4_Co_ct.dart';
 import 'group4_Mn_ct.dart';
 import 'group4_Zn_ct.dart';
 import '../a_intro.dart';
-import 'package:ChemStudio/screens/WET_TEST/A_WET/group0/group0analysis.dart';
+import 'package:chemstudio/screens/WET_TEST/A_WET/group0/group0analysis.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -14,7 +14,8 @@ class saltAGroup4AnalysisScreen extends StatefulWidget {
   const saltAGroup4AnalysisScreen({super.key});
 
   @override
-  State<saltAGroup4AnalysisScreen> createState() => _saltAGroup4AnalysisScreenState();
+  State<saltAGroup4AnalysisScreen> createState() =>
+      _saltAGroup4AnalysisScreenState();
 }
 
 class _saltAGroup4AnalysisScreenState extends State<saltAGroup4AnalysisScreen>
@@ -28,11 +29,17 @@ class _saltAGroup4AnalysisScreenState extends State<saltAGroup4AnalysisScreen>
   final String _tableName = 'SaltA_WetTest';
 
   late final WetTestItem _test = WetTestItem(
-    id: 15, 
+    id: 15,
     title: 'Analysis of Group IV',
-    procedure: 'O.S / Filtrate + NH₄Cl (equal) + NH₄OH (till alkaline to litmus) + passing H₂S gas or water',
+    procedure:
+        'O.S / Filtrate + NH₄Cl (equal) + NH₄OH (till alkaline to litmus) + passing H₂S gas or water',
     observation: 'Black ppt',
-    options: ['Ni²⁺ may be present', 'Co²⁺ may be present', 'Mn²⁺ may be present', 'Zn²⁺ may be present'],
+    options: [
+      'Ni²⁺ may be present',
+      'Co²⁺ may be present',
+      'Mn²⁺ may be present',
+      'Zn²⁺ may be present',
+    ],
     correct: 'Ni²⁺ may be present', // Default - varies based on observation
   );
 
@@ -43,13 +50,18 @@ class _saltAGroup4AnalysisScreenState extends State<saltAGroup4AnalysisScreen>
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswer();
     _animController.forward();
   }
 
   Future<void> _loadSavedAnswer() async {
-    final List<Map<String, dynamic>> data = await _dbHelper.getAnswers(_tableName);
+    final List<Map<String, dynamic>> data = await _dbHelper.getAnswers(
+      _tableName,
+    );
 
     String? savedAnswer;
 
@@ -109,9 +121,9 @@ class _saltAGroup4AnalysisScreenState extends State<saltAGroup4AnalysisScreen>
 
   Widget _buildGradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(
@@ -168,16 +180,18 @@ class _saltAGroup4AnalysisScreenState extends State<saltAGroup4AnalysisScreen>
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const WetTestIntroAScreen()),
+              MaterialPageRoute(
+                builder: (context) => const WetTestIntroAScreen(),
+              ),
               (route) => false,
             );
           },
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue])
-                  .createShader(bounds),
-          child:Text(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
+          child: Text(
             'Salt A : Wet Test',
             style: TextStyle(
               color: Colors.white,
@@ -190,8 +204,10 @@ class _saltAGroup4AnalysisScreenState extends State<saltAGroup4AnalysisScreen>
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-              .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -199,10 +215,10 @@ class _saltAGroup4AnalysisScreenState extends State<saltAGroup4AnalysisScreen>
               children: [
                 Text(
                   test.title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Expanded(
@@ -276,7 +292,7 @@ class _saltAGroup4AnalysisScreenState extends State<saltAGroup4AnalysisScreen>
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

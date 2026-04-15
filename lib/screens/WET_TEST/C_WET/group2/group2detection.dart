@@ -1,8 +1,8 @@
 // E:\flutter chemistry\wet\wet\lib\C\group2\group2detection.dart
 
-import 'package:ChemStudio/models/group_status.dart';
+import 'package:chemstudio/models/group_status.dart';
 import 'package:flutter/material.dart';
-import 'package:ChemStudio/DB/database_helper.dart';
+import 'package:chemstudio/DB/database_helper.dart';
 import '../group0/group0analysis.dart';
 import 'group2analysis.dart'; // ✅ FIXED: Import correct analysis screen
 import '../group3/group3detection.dart';
@@ -23,7 +23,6 @@ class WetTestCGroupTwoDetectionScreen extends StatefulWidget {
 class _WetTestCGroupTwoDetectionScreenState
     extends State<WetTestCGroupTwoDetectionScreen>
     with SingleTickerProviderStateMixin {
-
   int _index = 0;
   String? _selectedOption;
 
@@ -53,16 +52,20 @@ class _WetTestCGroupTwoDetectionScreenState
       duration: const Duration(milliseconds: 450),
     );
 
-    _fadeSlide =
-        CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
 
     _loadSavedAnswer();
     _animController.forward();
   }
 
   Future<void> _loadSavedAnswer() async {
-    final saved =
-        await _dbHelper.getStudentAnswer(_tableName, _tests[_index].id);
+    final saved = await _dbHelper.getStudentAnswer(
+      _tableName,
+      _tests[_index].id,
+    );
     if (saved != null) {
       setState(() {
         _selectedOption = saved;
@@ -74,38 +77,34 @@ class _WetTestCGroupTwoDetectionScreenState
   Future<void> _onOptionSelected(WetTestItem test, String selected) async {
     setState(() => _selectedOption = selected);
 
-    await _dbHelper.saveStudentAnswer(
-      _tableName,
-      test.id,
-      selected,
-    );
+    await _dbHelper.saveStudentAnswer(_tableName, test.id, selected);
   }
 
   // Replace the _next() method:
-void _next() async {
-  if (_selectedOption == 'Group-II is present') {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const WetTestCGroupTwoAnalysisScreen(),
-      ),
-    );
-  } else if (_selectedOption == 'Group-II is absent') {
-    // ✅ ADD THIS: Mark Group 2 as absent before navigating
-    await _dbHelper.insertGroupDecision(
-      salt: 'C',
-      groupNumber: 2,
-      status: GroupStatus.absent,
-    );
-    
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const WetTestCGroupThreeDetectionScreen(),
-      ),
-    );
+  void _next() async {
+    if (_selectedOption == 'Group-II is present') {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const WetTestCGroupTwoAnalysisScreen(),
+        ),
+      );
+    } else if (_selectedOption == 'Group-II is absent') {
+      // ✅ ADD THIS: Mark Group 2 as absent before navigating
+      await _dbHelper.insertGroupDecision(
+        salt: 'C',
+        groupNumber: 2,
+        status: GroupStatus.absent,
+      );
+
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const WetTestCGroupThreeDetectionScreen(),
+        ),
+      );
+    }
   }
-}
 
   void _prev() {
     Navigator.pop(context, _selectedOption);
@@ -132,15 +131,17 @@ void _next() async {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const WetTestIntroCScreen()),
+              MaterialPageRoute(
+                builder: (context) => const WetTestIntroCScreen(),
+              ),
               (route) => false,
             );
           },
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue])
-                  .createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt C : Wet Test',
             style: TextStyle(
@@ -154,19 +155,22 @@ void _next() async {
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position:
-              Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-                  .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(test.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold)),
+                Text(
+                  test.title,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView(
@@ -233,7 +237,9 @@ void _next() async {
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 12),
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],
@@ -248,9 +254,9 @@ void _next() async {
 
   Widget _buildInferenceHeader() {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: const Text(
         'Select the correct inference:',
         style: TextStyle(
@@ -294,13 +300,16 @@ void _next() async {
 
   Widget _gradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
       ),
     );
   }

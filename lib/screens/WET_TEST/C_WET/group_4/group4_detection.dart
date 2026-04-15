@@ -1,10 +1,10 @@
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/models/group_status.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/models/group_status.dart';
 import 'package:flutter/material.dart';
 import 'group4_analysis.dart';
 import '../group_5/group5_detection.dart';
 import '../c_intro.dart';
-import 'package:ChemStudio/screens/WET_TEST/C_WET/group0/group0analysis.dart';
+import 'package:chemstudio/screens/WET_TEST/C_WET/group0/group0analysis.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -43,7 +43,10 @@ class _Group4DetectionScreenState extends State<Group4DetectionScreen>
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswers();
     _animController.forward();
   }
@@ -53,7 +56,9 @@ class _Group4DetectionScreenState extends State<Group4DetectionScreen>
     setState(() {
       final testId = _test.id;
       final match = data.where((row) => row['question_id'] == testId);
-      final savedAnswer = match.isNotEmpty ? match.first['student_answer'] : null;
+      final savedAnswer = match.isNotEmpty
+          ? match.first['student_answer']
+          : null;
       _selectedOption = savedAnswer;
     });
   }
@@ -63,36 +68,32 @@ class _Group4DetectionScreenState extends State<Group4DetectionScreen>
       _selectedOption = selected;
     });
 
-    await _dbHelper.saveStudentAnswer(
-      _tableName,
-      test.id,
-      selected,
-    );
+    await _dbHelper.saveStudentAnswer(_tableName, test.id, selected);
   }
 
   // In Group4DetectionScreen (document 8)
-// Replace the _next() method:
+  // Replace the _next() method:
 
-void _next() async {
-  if (_selectedOption == 'Group-IV is present') {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const Group4AnalysisScreen()),
-    );
-  } else if (_selectedOption == 'Group-IV is Absent') {
-    // ✅ ADD THIS: Mark Group 4 as absent before navigating
-    await _dbHelper.insertGroupDecision(
-      salt: 'C',
-      groupNumber: 4,
-      status: GroupStatus.absent,
-    );
-    
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const Group5DetectionScreen()),
-    );
+  void _next() async {
+    if (_selectedOption == 'Group-IV is present') {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const Group4AnalysisScreen()),
+      );
+    } else if (_selectedOption == 'Group-IV is Absent') {
+      // ✅ ADD THIS: Mark Group 4 as absent before navigating
+      await _dbHelper.insertGroupDecision(
+        salt: 'C',
+        groupNumber: 4,
+        status: GroupStatus.absent,
+      );
+
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const Group5DetectionScreen()),
+      );
+    }
   }
-}
 
   void _prev() {
     if (Navigator.canPop(context)) {
@@ -108,13 +109,16 @@ void _next() async {
 
   Widget _buildGradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
       ),
     );
   }
@@ -164,15 +168,17 @@ void _next() async {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const WetTestIntroCScreen()),
+              MaterialPageRoute(
+                builder: (context) => const WetTestIntroCScreen(),
+              ),
               (route) => false,
             );
           },
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue])
-                  .createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt C : Wet Test',
             style: TextStyle(
@@ -186,19 +192,22 @@ void _next() async {
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position:
-              Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-                  .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(test.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold)),
+                Text(
+                  test.title,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView(
@@ -265,7 +274,9 @@ void _next() async {
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 12),
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],

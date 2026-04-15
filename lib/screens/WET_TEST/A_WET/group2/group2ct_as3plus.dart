@@ -1,7 +1,7 @@
 // group2ct_as3plus.dart
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/models/group_status.dart';
-import 'package:ChemStudio/screens/WET_TEST/A_WET/WetTestAFinalResultScreen.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/models/group_status.dart';
+import 'package:chemstudio/screens/WET_TEST/A_WET/WetTestAFinalResultScreen.dart';
 import 'package:flutter/material.dart';
 import '../group0/group0analysis.dart';
 import '../group3/group3detection.dart';
@@ -18,11 +18,9 @@ class WetTestAGroupTwoCTAsScreen extends StatefulWidget {
       _WetTestAGroupTwoCTAsScreenState();
 }
 
-class _WetTestAGroupTwoCTAsScreenState
-    extends State<WetTestAGroupTwoCTAsScreen>
+class _WetTestAGroupTwoCTAsScreenState extends State<WetTestAGroupTwoCTAsScreen>
     with SingleTickerProviderStateMixin {
-  
-  String? _selectedOption; 
+  String? _selectedOption;
   bool get _isSelected => _selectedOption != null;
 
   late final AnimationController _animController;
@@ -31,16 +29,16 @@ class _WetTestAGroupTwoCTAsScreenState
   final _dbHelper = DatabaseHelper.instance;
   final String _tableName = 'SaltA_WetTest';
 
-  static const String SOLUTION_PREPARATION = 
+  static const String SOLUTION_PREPARATION =
       'Dissolve the yellow ppt of Group 2 in conc. HNO₃ and use this solution for C.T of As³⁺';
 
   late final WetTestItem _test = WetTestItem(
     id: 9,
     title: 'C.T for As³⁺',
-    procedure: 'Above Solution + ammonium molybdate solution + heat', 
+    procedure: 'Above Solution + ammonium molybdate solution + heat',
     observation: 'Yellow ppt',
     options: ['As³⁺ confirmed'],
-    correct: 'As³⁺ confirmed', 
+    correct: 'As³⁺ confirmed',
   );
 
   @override
@@ -50,13 +48,19 @@ class _WetTestAGroupTwoCTAsScreenState
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswer();
     _animController.forward();
   }
 
   Future<void> _loadSavedAnswer() async {
-    final studentAnswer = await _dbHelper.getStudentAnswer(_tableName, _test.id);
+    final studentAnswer = await _dbHelper.getStudentAnswer(
+      _tableName,
+      _test.id,
+    );
     if (studentAnswer != null) {
       setState(() {
         _selectedOption = studentAnswer;
@@ -95,7 +99,9 @@ class _WetTestAGroupTwoCTAsScreenState
     if (presentCount >= 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const WetTestAFinalResultScreen(salt: 'A')),
+        MaterialPageRoute(
+          builder: (_) => const WetTestAFinalResultScreen(salt: 'A'),
+        ),
       );
     } else {
       Navigator.pushReplacement(
@@ -119,12 +125,15 @@ class _WetTestAGroupTwoCTAsScreenState
 
   Widget _buildGradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(
-          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
         ),
       ),
     );
@@ -144,7 +153,11 @@ class _WetTestAGroupTwoCTAsScreenState
             const SizedBox(height: 8),
             Text(
               content,
-              style: const TextStyle(fontSize: 14, color: primaryBlue, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 14,
+                color: primaryBlue,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -169,7 +182,11 @@ class _WetTestAGroupTwoCTAsScreenState
             const SizedBox(height: 8),
             Text(
               observation,
-              style: TextStyle(color: primaryBlue, fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(
+                color: primaryBlue,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ],
         ),
@@ -194,29 +211,38 @@ class _WetTestAGroupTwoCTAsScreenState
           ),
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: Text(
             'Salt A : Wet Test',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
           ),
         ),
       ),
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-              .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(_test.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold)),
+                Text(
+                  _test.title,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView(
@@ -231,7 +257,8 @@ class _WetTestAGroupTwoCTAsScreenState
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: InkWell(
-                            onTap: () => _onOptionTapped(opt), // ✅ FIXED: Just select
+                            onTap: () =>
+                                _onOptionTapped(opt), // ✅ FIXED: Just select
                             borderRadius: BorderRadius.circular(8),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
@@ -242,15 +269,21 @@ class _WetTestAGroupTwoCTAsScreenState
                                     : Colors.white,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: selectedHere ? accentTeal : Colors.grey.shade300,
+                                  color: selectedHere
+                                      ? accentTeal
+                                      : Colors.grey.shade300,
                                   width: 1.5,
                                 ),
                               ),
                               child: Text(
                                 opt,
                                 style: TextStyle(
-                                  fontWeight: selectedHere ? FontWeight.bold : FontWeight.normal,
-                                  color: selectedHere ? primaryBlue : Colors.black87,
+                                  fontWeight: selectedHere
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                  color: selectedHere
+                                      ? primaryBlue
+                                      : Colors.black87,
                                 ),
                               ),
                             ),
@@ -269,13 +302,18 @@ class _WetTestAGroupTwoCTAsScreenState
                       label: const Text('Previous'),
                     ),
                     ElevatedButton.icon(
-                      onPressed: _isSelected ? _handleNext : null, // ✅ FIXED: Call _handleNext
+                      onPressed: _isSelected
+                          ? _handleNext
+                          : null, // ✅ FIXED: Call _handleNext
                       icon: const Icon(Icons.arrow_forward),
                       label: const Text('Next'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],

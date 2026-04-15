@@ -1,7 +1,7 @@
 // group5_ct_ba.dart
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/models/group_status.dart';
-import 'package:ChemStudio/screens/WET_TEST/C_WET/WetTestCFinalResultScreen.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/models/group_status.dart';
+import 'package:chemstudio/screens/WET_TEST/C_WET/WetTestCFinalResultScreen.dart';
 import 'package:flutter/material.dart';
 import '../group0/group0analysis.dart';
 import '../group_6/group6_detection.dart';
@@ -19,8 +19,7 @@ class Group5CTBaScreen extends StatefulWidget {
 
 class _Group5CTBaScreenState extends State<Group5CTBaScreen>
     with SingleTickerProviderStateMixin {
-  
-  String? _selectedOption; 
+  String? _selectedOption;
   bool get _isSelected => _selectedOption != null;
 
   late final AnimationController _animController;
@@ -32,10 +31,10 @@ class _Group5CTBaScreenState extends State<Group5CTBaScreen>
   late final WetTestItem _test = WetTestItem(
     id: 22, // Sequential ID
     title: 'C.T for Ba²⁺',
-    procedure: 'Above acetate solution + dil. H₂SO₄', 
+    procedure: 'Above acetate solution + dil. H₂SO₄',
     observation: 'White ppt',
     options: ['Ba²⁺ confirmed'],
-    correct: 'Ba²⁺ confirmed', 
+    correct: 'Ba²⁺ confirmed',
   );
 
   @override
@@ -45,13 +44,19 @@ class _Group5CTBaScreenState extends State<Group5CTBaScreen>
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswer();
     _animController.forward();
   }
 
   Future<void> _loadSavedAnswer() async {
-    final studentAnswer = await _dbHelper.getStudentAnswer(_tableName, _test.id);
+    final studentAnswer = await _dbHelper.getStudentAnswer(
+      _tableName,
+      _test.id,
+    );
     if (studentAnswer != null) {
       setState(() {
         _selectedOption = studentAnswer;
@@ -67,51 +72,55 @@ class _Group5CTBaScreenState extends State<Group5CTBaScreen>
   }
 
   // ✅ Handle everything only when Next is clicked
-Future<void> _handleNext() async {
-  if (_selectedOption == null) return;
+  Future<void> _handleNext() async {
+    if (_selectedOption == null) return;
 
-  print('🔵 GROUP 5 CT BA - Starting _handleNext()');
-  
-  // 1️⃣ Save CT answer
-  await _dbHelper.saveStudentAnswer(_tableName, _test.id, _selectedOption!);
-  print('✅ Saved CT answer: $_selectedOption for question ID: ${_test.id}');
+    print('🔵 GROUP 5 CT BA - Starting _handleNext()');
 
-  // 2️⃣ Mark Group V as present
-  await _dbHelper.insertGroupDecision(
-    salt: 'C',
-    groupNumber: 5,
-    status: GroupStatus.present,
-  );
-  print('✅ Marked Group 5 as PRESENT');
+    // 1️⃣ Save CT answer
+    await _dbHelper.saveStudentAnswer(_tableName, _test.id, _selectedOption!);
+    print('✅ Saved CT answer: $_selectedOption for question ID: ${_test.id}');
 
-  // 3️⃣ Count present groups
-  final studentGroups = await _dbHelper.getStudentGroupDecisions('C');
-  print('📊 All groups from DB: $studentGroups');
-  
-  final presentCount = studentGroups.values
-      .where((status) => status == GroupStatus.present)
-      .length;
-  
-  print('🔢 Present count: $presentCount');
-  print('🎯 Checking: presentCount ($presentCount) >= 2? ${presentCount >= 2}');
-
-  // 4️⃣ Navigate accordingly
-  if (!mounted) return;
-  
-  if (presentCount >= 2) {
-    print('✅ NAVIGATING TO RESULT SCREEN');
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const WetTestCFinalResultScreen(salt: 'C')),
+    // 2️⃣ Mark Group V as present
+    await _dbHelper.insertGroupDecision(
+      salt: 'C',
+      groupNumber: 5,
+      status: GroupStatus.present,
     );
-  } else {
-    print('⚠️ NAVIGATING TO GROUP 6 DETECTION');
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const Group6Detection()),
+    print('✅ Marked Group 5 as PRESENT');
+
+    // 3️⃣ Count present groups
+    final studentGroups = await _dbHelper.getStudentGroupDecisions('C');
+    print('📊 All groups from DB: $studentGroups');
+
+    final presentCount = studentGroups.values
+        .where((status) => status == GroupStatus.present)
+        .length;
+
+    print('🔢 Present count: $presentCount');
+    print(
+      '🎯 Checking: presentCount ($presentCount) >= 2? ${presentCount >= 2}',
     );
+
+    // 4️⃣ Navigate accordingly
+    if (!mounted) return;
+
+    if (presentCount >= 2) {
+      print('✅ NAVIGATING TO RESULT SCREEN');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const WetTestCFinalResultScreen(salt: 'C'),
+        ),
+      );
+    } else {
+      print('⚠️ NAVIGATING TO GROUP 6 DETECTION');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const Group6Detection()),
+      );
+    }
   }
-}
 
   void _prev() {
     if (Navigator.canPop(context)) Navigator.pop(context);
@@ -125,11 +134,16 @@ Future<void> _handleNext() async {
 
   Widget _buildGradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
       ),
     );
   }
@@ -176,7 +190,11 @@ Future<void> _handleNext() async {
             const SizedBox(height: 8),
             Text(
               observation,
-              style: TextStyle(color: primaryBlue, fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(
+                color: primaryBlue,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ],
         ),
@@ -201,29 +219,38 @@ Future<void> _handleNext() async {
           ),
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt C : Wet Test',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
           ),
         ),
       ),
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-              .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(_test.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold)),
+                Text(
+                  _test.title,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView(
@@ -250,15 +277,21 @@ Future<void> _handleNext() async {
                                     : Colors.white,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: selectedHere ? accentTeal : Colors.grey.shade300,
+                                  color: selectedHere
+                                      ? accentTeal
+                                      : Colors.grey.shade300,
                                   width: 1.5,
                                 ),
                               ),
                               child: Text(
                                 opt,
                                 style: TextStyle(
-                                  fontWeight: selectedHere ? FontWeight.bold : FontWeight.normal,
-                                  color: selectedHere ? accentTeal : Colors.black87,
+                                  fontWeight: selectedHere
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                  color: selectedHere
+                                      ? accentTeal
+                                      : Colors.black87,
                                 ),
                               ),
                             ),
@@ -283,7 +316,10 @@ Future<void> _handleNext() async {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],

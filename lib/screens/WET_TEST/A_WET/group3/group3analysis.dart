@@ -1,4 +1,4 @@
-import 'package:ChemStudio/DB/database_helper.dart';
+import 'package:chemstudio/DB/database_helper.dart';
 import 'package:flutter/material.dart';
 import '../group0/group0analysis.dart';
 import 'group3ct_fe3plus.dart';
@@ -20,7 +20,6 @@ class WetTestAGroupThreeAnalysisScreen extends StatefulWidget {
 class _WetTestAGroupThreeAnalysisScreenState
     extends State<WetTestAGroupThreeAnalysisScreen>
     with SingleTickerProviderStateMixin {
-
   String? _selectedOption;
 
   late final AnimationController _animController;
@@ -45,13 +44,18 @@ class _WetTestAGroupThreeAnalysisScreenState
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswer();
     _animController.forward();
   }
 
   Future<void> _loadSavedAnswer() async {
-    final List<Map<String, dynamic>> data = await _dbHelper.getAnswers(_tableName);
+    final List<Map<String, dynamic>> data = await _dbHelper.getAnswers(
+      _tableName,
+    );
 
     String? savedAnswer;
 
@@ -81,16 +85,12 @@ class _WetTestAGroupThreeAnalysisScreenState
     if (_selectedOption == 'Fe³⁺ may be present') {
       await Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (_) => const WetTestAGroupThreeCTFeScreen(),
-        ),
+        MaterialPageRoute(builder: (_) => const WetTestAGroupThreeCTFeScreen()),
       );
     } else if (_selectedOption == 'Al³⁺ may be present') {
       await Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (_) => const WetTestAGroupThreeCTAlScreen(),
-        ),
+        MaterialPageRoute(builder: (_) => const WetTestAGroupThreeCTAlScreen()),
       );
     }
   }
@@ -110,9 +110,9 @@ class _WetTestAGroupThreeAnalysisScreenState
   // Helper methods for UI consistency
   Widget _buildGradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(
@@ -169,16 +169,18 @@ class _WetTestAGroupThreeAnalysisScreenState
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const WetTestIntroAScreen()),
+              MaterialPageRoute(
+                builder: (context) => const WetTestIntroAScreen(),
+              ),
               (route) => false,
             );
           },
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue])
-                  .createShader(bounds),
-          child:Text(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
+          child: Text(
             'Salt A : Wet Test',
             style: TextStyle(
               color: Colors.white,
@@ -191,8 +193,10 @@ class _WetTestAGroupThreeAnalysisScreenState
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-              .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -200,10 +204,10 @@ class _WetTestAGroupThreeAnalysisScreenState
               children: [
                 Text(
                   test.title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Expanded(
@@ -279,7 +283,7 @@ class _WetTestAGroupThreeAnalysisScreenState
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

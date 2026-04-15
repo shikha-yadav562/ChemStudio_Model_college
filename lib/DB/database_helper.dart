@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:ChemStudio/models/group_status.dart';
+import 'package:chemstudio/models/group_status.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -94,9 +94,13 @@ class DatabaseHelper {
   }
 
   // Save correct answer using UPDATE or INSERT
-  Future<void> saveCorrectAnswer(String tableName, int questionId, String correctAnswer) async {
+  Future<void> saveCorrectAnswer(
+    String tableName,
+    int questionId,
+    String correctAnswer,
+  ) async {
     final db = await database;
-    
+
     final existing = await db.query(
       tableName,
       where: 'question_id = ?',
@@ -104,13 +108,10 @@ class DatabaseHelper {
     );
 
     if (existing.isEmpty) {
-      await db.insert(
-        tableName,
-        {
-          'question_id': questionId,
-          'correct_answer': correctAnswer,
-        },
-      );
+      await db.insert(tableName, {
+        'question_id': questionId,
+        'correct_answer': correctAnswer,
+      });
     } else {
       await db.update(
         tableName,
@@ -122,9 +123,13 @@ class DatabaseHelper {
   }
 
   // Save student answer using UPDATE or INSERT
-  Future<void> saveStudentAnswer(String tableName, int questionId, String studentAnswer) async {
+  Future<void> saveStudentAnswer(
+    String tableName,
+    int questionId,
+    String studentAnswer,
+  ) async {
     final db = await database;
-    
+
     final existing = await db.query(
       tableName,
       where: 'question_id = ?',
@@ -132,13 +137,10 @@ class DatabaseHelper {
     );
 
     if (existing.isEmpty) {
-      await db.insert(
-        tableName,
-        {
-          'question_id': questionId,
-          'student_answer': studentAnswer,
-        },
-      );
+      await db.insert(tableName, {
+        'question_id': questionId,
+        'student_answer': studentAnswer,
+      });
     } else {
       await db.update(
         tableName,
@@ -192,15 +194,11 @@ class DatabaseHelper {
     required GroupStatus status,
   }) async {
     final db = await database;
-    await db.insert(
-      'WetTestGroups',
-      {
-        'salt': salt,
-        'group_number': groupNumber,
-        'student_status': status.name, // Stores 'present' or 'absent'
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    await db.insert('WetTestGroups', {
+      'salt': salt,
+      'group_number': groupNumber,
+      'student_status': status.name, // Stores 'present' or 'absent'
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   /// Read all group decisions for a salt
@@ -215,21 +213,23 @@ class DatabaseHelper {
     );
 
     Map<int, GroupStatus> groupStatuses = {};
-    
+
     for (final row in result) {
       final groupNumber = row['group_number'] as int;
       final statusString = row['student_status'] as String;
-      
+
       // Convert string back to enum
       // Using byName which throws if not found, or use a safer approach:
       GroupStatus status;
       try {
         status = GroupStatus.values.byName(statusString);
       } catch (e) {
-        print('Warning: Invalid status "$statusString" for group $groupNumber, defaulting to absent');
+        print(
+          'Warning: Invalid status "$statusString" for group $groupNumber, defaulting to absent',
+        );
         status = GroupStatus.absent;
       }
-      
+
       groupStatuses[groupNumber] = status;
     }
 

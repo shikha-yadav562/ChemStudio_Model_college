@@ -1,8 +1,8 @@
-import 'package:ChemStudio/models/group_status.dart';
+import 'package:chemstudio/models/group_status.dart';
 import 'package:flutter/material.dart';
-import 'package:ChemStudio/DB/database_helper.dart';
+import 'package:chemstudio/DB/database_helper.dart';
 import '0CT.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/group1/group1detection.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/group1/group1detection.dart';
 import '../b_intro.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
@@ -29,7 +29,6 @@ class WetTestItem {
   });
 }
 
-
 // ---------------- Group Zero Analysis Screen ----------------
 class WetTestBGroupZeroScreen extends StatefulWidget {
   const WetTestBGroupZeroScreen({super.key});
@@ -54,7 +53,8 @@ class _WetTestBGroupZeroScreenState extends State<WetTestBGroupZeroScreen>
     title: 'Analysis of Group Zero',
     procedure:
         'Take Original Solution (O.S.) in a test tube, add NaOH solution, and heat gently. Hold moist turmeric paper near the mouth of the test tube.',
-    observation: ' Evolution of NH4 gas , which turns moist turmeric paper brown / red ',
+    observation:
+        ' Evolution of NH3 gas , which turns moist turmeric paper brown / red ',
     options: ['Group Zero is present', 'Group Zero is absent'],
     correct: 'Group Zero is present',
   );
@@ -68,16 +68,17 @@ class _WetTestBGroupZeroScreenState extends State<WetTestBGroupZeroScreen>
       duration: const Duration(milliseconds: 450),
     );
 
-    _fadeSlide =
-        CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
 
     _loadSavedAnswer();
     _animController.forward();
   }
 
   Future<void> _loadSavedAnswer() async {
-    final saved =
-        await _dbHelper.getStudentAnswer(_tableName, _test.id);
+    final saved = await _dbHelper.getStudentAnswer(_tableName, _test.id);
     if (saved != null) {
       setState(() => _selectedOption = saved);
     }
@@ -87,44 +88,40 @@ class _WetTestBGroupZeroScreenState extends State<WetTestBGroupZeroScreen>
     setState(() => _selectedOption = option);
 
     // ✅ ONLY save student answer
-    await _dbHelper.saveStudentAnswer(
-      _tableName,
-      _test.id,
-      option,
-    );
+    await _dbHelper.saveStudentAnswer(_tableName, _test.id, option);
   }
 
-void _next() async {  // ✅ Add async
-  if (_selectedOption == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Please select an option')),
-    );
-    return;
+  void _next() async {
+    // ✅ Add async
+    if (_selectedOption == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please select an option')));
+      return;
+    }
+
+    if (_selectedOption == 'Group Zero is present') {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const WetTestBGroupZeroCTScreen()),
+      );
+    } else {
+      // ✅ Mark Group 0 as absent before navigating
+      await _dbHelper.insertGroupDecision(
+        salt: 'B',
+        groupNumber: 0,
+        status: GroupStatus.absent,
+      );
+
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const WetTestBGroupOneDetectionScreen(),
+        ),
+      );
+    }
   }
 
-  if (_selectedOption == 'Group Zero is present') {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const WetTestBGroupZeroCTScreen(),
-      ),
-    );
-  } else {
-    // ✅ Mark Group 0 as absent before navigating
-    await _dbHelper.insertGroupDecision(
-      salt: 'B',
-      groupNumber: 0,
-      status: GroupStatus.absent,
-    );
-    
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const WetTestBGroupOneDetectionScreen(),
-      ),
-    );
-  }
-}
   @override
   void dispose() {
     _animController.dispose();
@@ -144,17 +141,15 @@ void _next() async {  // ✅ Add async
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(
-                builder: (_) => const WetTestIntroBScreen(),
-              ),
+              MaterialPageRoute(builder: (_) => const WetTestIntroBScreen()),
               (route) => false,
             );
           },
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue])
-                  .createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt B : Wet Test',
             style: TextStyle(
@@ -174,13 +169,10 @@ void _next() async {  // ✅ Add async
             children: [
               Text(
                 _test.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall
-                    ?.copyWith(
-                      color: primaryBlue,
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: primaryBlue,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 12),
               Expanded(
@@ -193,20 +185,17 @@ void _next() async {  // ✅ Add async
                     ..._test.options.map((opt) {
                       final selected = _selectedOption == opt;
                       return Padding(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 4),
+                        padding: const EdgeInsets.symmetric(vertical: 4),
                         child: InkWell(
                           onTap: () => _onOptionSelected(opt),
                           child: AnimatedContainer(
-                            duration:
-                                const Duration(milliseconds: 200),
+                            duration: const Duration(milliseconds: 200),
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: selected
                                   ? accentTeal.withOpacity(0.1)
                                   : Colors.white,
-                              borderRadius:
-                                  BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(8),
                               border: Border.all(
                                 color: selected
                                     ? accentTeal
@@ -220,9 +209,7 @@ void _next() async {  // ✅ Add async
                                 fontWeight: selected
                                     ? FontWeight.bold
                                     : FontWeight.normal,
-                                color: selected
-                                    ? accentTeal
-                                    : Colors.black87,
+                                color: selected ? accentTeal : Colors.black87,
                               ),
                             ),
                           ),
@@ -242,7 +229,9 @@ void _next() async {  // ✅ Add async
                     backgroundColor: primaryBlue,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
                   ),
                 ),
               ),
@@ -255,9 +244,9 @@ void _next() async {  // ✅ Add async
 
   Widget _buildInferenceHeader() {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: const Text(
         'Select the correct inference:',
         style: TextStyle(
@@ -272,8 +261,7 @@ void _next() async {  // ✅ Add async
   Widget _buildTestCard() {
     return Card(
       elevation: 4,
-      shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -301,9 +289,9 @@ void _next() async {  // ✅ Add async
 
   Widget _gradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(

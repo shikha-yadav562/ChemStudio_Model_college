@@ -1,7 +1,7 @@
-import 'package:ChemStudio/screens/WET_TEST/D_WET/D_wet_test_answers.dart';
+import 'package:chemstudio/screens/WET_TEST/D_WET/D_wet_test_answers.dart';
 import 'package:flutter/material.dart';
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/models/group_status.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/models/group_status.dart';
 
 /// ===============================================================
 /// FINAL RESULT SCREEN
@@ -16,8 +16,7 @@ class WetTestDFinalResultScreen extends StatefulWidget {
       _WetTestDFinalResultScreenState();
 }
 
-class _WetTestDFinalResultScreenState
-    extends State<WetTestDFinalResultScreen> {
+class _WetTestDFinalResultScreenState extends State<WetTestDFinalResultScreen> {
   bool isLoading = true;
 
   Map<int, GroupStatus> studentGroups = {};
@@ -27,9 +26,9 @@ class _WetTestDFinalResultScreenState
   final Map<int, String> correctIonsPerGroup = {
     0: 'NH4+',
     1: 'Pb2+',
-    2: 'Cu2+',  // ✅ Only Cu²⁺ is correct for Group 2
+    2: 'Cu2+', // ✅ Only Cu²⁺ is correct for Group 2
     3: 'Al3+',
-    4: 'Ni2+',  // ✅ Only Ni²⁺ is correct for Group 4
+    4: 'Ni2+', // ✅ Only Ni²⁺ is correct for Group 4
     5: 'Ca2+',
     6: 'Mg2+',
   };
@@ -58,8 +57,9 @@ class _WetTestDFinalResultScreenState
   }
 
   Future<void> _loadData() async {
-    studentGroups =
-        await DatabaseHelper.instance.getStudentGroupDecisions(widget.salt);
+    studentGroups = await DatabaseHelper.instance.getStudentGroupDecisions(
+      widget.salt,
+    );
 
     await _identifySelectedIons();
 
@@ -117,8 +117,7 @@ class _WetTestDFinalResultScreenState
 
     if (studentAnswer == null || correct == null) return false;
 
-    return studentAnswer.trim().toLowerCase() ==
-        correct.trim().toLowerCase();
+    return studentAnswer.trim().toLowerCase() == correct.trim().toLowerCase();
   }
 
   String formatIon(String ion) {
@@ -161,8 +160,7 @@ class _WetTestDFinalResultScreenState
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            const Icon(Icons.check_circle,
-                size: 100, color: Color(0xFF00897B)),
+            const Icon(Icons.check_circle, size: 100, color: Color(0xFF00897B)),
             const SizedBox(height: 24),
             const Text(
               'The given inorganic mixture contains the\nfollowing cations:',
@@ -173,8 +171,7 @@ class _WetTestDFinalResultScreenState
 
             /// ================= ION CARDS =================
             ...selectedIons.map((ion) {
-              final ct =
-                  ctTests.firstWhere((element) => element['ion'] == ion);
+              final ct = ctTests.firstWhere((element) => element['ion'] == ion);
 
               return FutureBuilder<bool>(
                 future: isCTCorrect(
@@ -188,7 +185,9 @@ class _WetTestDFinalResultScreenState
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
                     padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 24),
+                      vertical: 20,
+                      horizontal: 24,
+                    ),
                     decoration: BoxDecoration(
                       color: isCorrect
                           ? const Color(0xFFE8F5E9)
@@ -230,8 +229,7 @@ class _WetTestDFinalResultScreenState
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                icon: const Icon(Icons.arrow_back,
-                    color: Color(0xFF00897B)),
+                icon: const Icon(Icons.arrow_back, color: Color(0xFF00897B)),
                 label: const Text(
                   'BACK',
                   style: TextStyle(
@@ -243,10 +241,8 @@ class _WetTestDFinalResultScreenState
                   Navigator.pop(context);
                 },
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(
-                      color: Color(0xFF00897B), width: 2),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 18),
+                  side: const BorderSide(color: Color(0xFF00897B), width: 2),
+                  padding: const EdgeInsets.symmetric(vertical: 18),
                 ),
               ),
             ),

@@ -1,7 +1,7 @@
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/models/group_status.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/WetTestBFinalResultScreen.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/group_4/group4_detection.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/models/group_status.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/WetTestBFinalResultScreen.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/group_4/group4_detection.dart';
 import 'package:flutter/material.dart';
 import '../group0/group0analysis.dart';
 import '../b_intro.dart';
@@ -20,7 +20,6 @@ class WetTestBGroupThreeCTAlScreen extends StatefulWidget {
 class _WetTestBGroupThreeCTAlScreenState
     extends State<WetTestBGroupThreeCTAlScreen>
     with SingleTickerProviderStateMixin {
-
   late final AnimationController _animController;
   late final Animation<double> _fadeSlide;
 
@@ -46,7 +45,10 @@ class _WetTestBGroupThreeCTAlScreenState
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswer();
     _animController.forward();
   }
@@ -89,11 +91,13 @@ class _WetTestBGroupThreeCTAlScreenState
 
     // 4️⃣ Navigate
     if (!mounted) return;
-    
+
     if (presentCount >= 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const WetTestBFinalResultScreen(salt: 'B')),
+        MaterialPageRoute(
+          builder: (_) => const WetTestBFinalResultScreen(salt: 'B'),
+        ),
       );
     } else {
       Navigator.pushReplacement(
@@ -115,34 +119,44 @@ class _WetTestBGroupThreeCTAlScreenState
 
   Widget _buildGradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
       ),
     );
   }
+
   Widget _buildSolutionCard() {
-  return Card(
-    elevation: 4,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildGradientHeader('Solution'),
-          const SizedBox(height: 6),
-          const Text(
-            'Dissolve the group 3 ppt in dil. HCL and use this solution for C.T',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: primaryBlue),
-          ),
-        ],
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildGradientHeader('Solution'),
+            const SizedBox(height: 6),
+            const Text(
+              'Dissolve the group 3 ppt in dil. HCL and use this solution for C.T',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: primaryBlue,
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildTestCard() {
     return Card(
@@ -161,7 +175,10 @@ class _WetTestBGroupThreeCTAlScreenState
             const SizedBox(height: 6),
             Text(
               _test.observation,
-              style: const TextStyle(color: primaryBlue, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                color: primaryBlue,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -178,11 +195,16 @@ class _WetTestBGroupThreeCTAlScreenState
         elevation: 2,
         centerTitle: true,
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt B : Wet Test',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
           ),
         ),
         leading: IconButton(
@@ -197,8 +219,10 @@ class _WetTestBGroupThreeCTAlScreenState
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-              .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -206,17 +230,17 @@ class _WetTestBGroupThreeCTAlScreenState
               children: [
                 Text(
                   _test.title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView(
                     children: [
-                       _buildSolutionCard(),  // ✅ ADD THIS
-      const SizedBox(height: 12),  // ✅ ADD THIS
+                      _buildSolutionCard(), // ✅ ADD THIS
+                      const SizedBox(height: 12), // ✅ ADD THIS
                       _buildTestCard(),
                       const SizedBox(height: 24),
                       _buildGradientHeader('Select the correct inference:'),
@@ -226,24 +250,33 @@ class _WetTestBGroupThreeCTAlScreenState
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: InkWell(
-                            onTap: () => _onOptionTapped(opt), // ✅ FIXED: Just select
+                            onTap: () =>
+                                _onOptionTapped(opt), // ✅ FIXED: Just select
                             borderRadius: BorderRadius.circular(8),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: selectedHere ? accentTeal.withOpacity(0.1) : Colors.white,
+                                color: selectedHere
+                                    ? accentTeal.withOpacity(0.1)
+                                    : Colors.white,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: selectedHere ? accentTeal : Colors.grey.shade300,
+                                  color: selectedHere
+                                      ? accentTeal
+                                      : Colors.grey.shade300,
                                   width: 1.5,
                                 ),
                               ),
                               child: Text(
                                 opt,
                                 style: TextStyle(
-                                  fontWeight: selectedHere ? FontWeight.bold : FontWeight.normal,
-                                  color: selectedHere ? primaryBlue : Colors.black87,
+                                  fontWeight: selectedHere
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                  color: selectedHere
+                                      ? primaryBlue
+                                      : Colors.black87,
                                 ),
                               ),
                             ),
@@ -262,13 +295,18 @@ class _WetTestBGroupThreeCTAlScreenState
                       label: const Text('Previous'),
                     ),
                     ElevatedButton.icon(
-                      onPressed: _isSelected ? _handleNext : null, // ✅ FIXED: Call _handleNext
+                      onPressed: _isSelected
+                          ? _handleNext
+                          : null, // ✅ FIXED: Call _handleNext
                       icon: const Icon(Icons.arrow_forward),
                       label: const Text('Next'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],

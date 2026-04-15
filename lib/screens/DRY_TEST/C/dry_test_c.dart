@@ -1,10 +1,10 @@
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/screens/WET_TEST/C_WET/correct_answers.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/screens/WET_TEST/C_WET/correct_answers.dart';
 import 'package:flutter/material.dart';
 import '../../welcome_screen.dart';
-import 'package:ChemStudio/screens/DRY_TEST/C/preliminary_test_c.dart';
-import 'package:ChemStudio/screens/WET_TEST/C_WET/c_intro.dart';
-import 'package:ChemStudio/screens/DRY_TEST/C/possible_radicals_c.dart';
+import 'package:chemstudio/screens/DRY_TEST/C/preliminary_test_c.dart';
+import 'package:chemstudio/screens/WET_TEST/C_WET/c_intro.dart';
+import 'package:chemstudio/screens/DRY_TEST/C/possible_radicals_c.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -44,7 +44,10 @@ class _DryTestCScreenState extends State<DryTestCScreen>
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _animController.forward();
 
     _loadSavedAnswers();
@@ -96,7 +99,7 @@ class _DryTestCScreenState extends State<DryTestCScreen>
           'Ba2+ may be present',
           'Sr2+ may be present',
           'Pb2+ may be present',
-          'Cu2+ may be present'
+          'Cu2+ may be present',
         ],
         correct: 'Ba2+ may be present',
       ),
@@ -157,7 +160,7 @@ class _DryTestCScreenState extends State<DryTestCScreen>
             ),
           ),
         );
-      } 
+      }
     } else {
       setState(() {
         _index--;
@@ -184,8 +187,9 @@ class _DryTestCScreenState extends State<DryTestCScreen>
         elevation: 2,
         centerTitle: true,
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: Text(
             widget.isReviewMode ? 'Salt C : Review Mode' : 'Salt C : Dry Tests',
             style: const TextStyle(
@@ -199,8 +203,10 @@ class _DryTestCScreenState extends State<DryTestCScreen>
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-              .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -209,9 +215,9 @@ class _DryTestCScreenState extends State<DryTestCScreen>
                 Text(
                   test.title,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: primaryBlue,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Expanded(
@@ -220,9 +226,9 @@ class _DryTestCScreenState extends State<DryTestCScreen>
                       _buildTestCard(test),
                       const SizedBox(height: 24),
                       ShaderMask(
-                        shaderCallback: (bounds) =>
-                            const LinearGradient(colors: [accentTeal, primaryBlue])
-                                .createShader(bounds),
+                        shaderCallback: (bounds) => const LinearGradient(
+                          colors: [accentTeal, primaryBlue],
+                        ).createShader(bounds),
                         child: const Text(
                           'Based on the observation, select the correct inference:',
                           style: TextStyle(
@@ -291,7 +297,9 @@ class _DryTestCScreenState extends State<DryTestCScreen>
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
                                   color: borderColor,
-                                  width: widget.isReviewMode && isCorrect ? 2.5 : 1.5,
+                                  width: widget.isReviewMode && isCorrect
+                                      ? 2.5
+                                      : 1.5,
                                 ),
                               ),
                               child: Row(
@@ -300,8 +308,10 @@ class _DryTestCScreenState extends State<DryTestCScreen>
                                     child: Text(
                                       opt,
                                       style: TextStyle(
-                                        fontWeight: (selectedHere ||
-                                                (widget.isReviewMode && isCorrect))
+                                        fontWeight:
+                                            (selectedHere ||
+                                                (widget.isReviewMode &&
+                                                    isCorrect))
                                             ? FontWeight.bold
                                             : FontWeight.normal,
                                         color: textColor,
@@ -310,11 +320,17 @@ class _DryTestCScreenState extends State<DryTestCScreen>
                                   ),
                                   if (widget.isReviewMode && selectedHere)
                                     Icon(
-                                      isCorrect ? Icons.check_circle : Icons.cancel,
-                                      color: isCorrect ? Colors.green : Colors.red,
+                                      isCorrect
+                                          ? Icons.check_circle
+                                          : Icons.cancel,
+                                      color: isCorrect
+                                          ? Colors.green
+                                          : Colors.red,
                                       size: 20,
                                     ),
-                                  if (widget.isReviewMode && !selectedHere && isCorrect)
+                                  if (widget.isReviewMode &&
+                                      !selectedHere &&
+                                      isCorrect)
                                     Icon(
                                       Icons.check_circle_outline,
                                       color: Colors.green,
@@ -341,14 +357,21 @@ class _DryTestCScreenState extends State<DryTestCScreen>
                       onPressed: widget.isReviewMode
                           ? _next
                           : (selected != null ? _next : null),
-                      icon: Icon(_index == _tests.length - 1
-                          ? Icons.check_circle_outline
-                          : Icons.arrow_forward),
-                      label: Text(_index == _tests.length - 1 ? 'Finish' : 'Next'),
+                      icon: Icon(
+                        _index == _tests.length - 1
+                            ? Icons.check_circle_outline
+                            : Icons.arrow_forward,
+                      ),
+                      label: Text(
+                        _index == _tests.length - 1 ? 'Finish' : 'Next',
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],
@@ -386,17 +409,18 @@ class _DryTestCScreenState extends State<DryTestCScreen>
   }
 
   Widget _gradientHeader(String text) => ShaderMask(
-        shaderCallback: (bounds) =>
-            const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-      );
+    shaderCallback: (bounds) => const LinearGradient(
+      colors: [accentTeal, primaryBlue],
+    ).createShader(bounds),
+    child: Text(
+      text,
+      style: const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
+      ),
+    ),
+  );
 
   Widget _heatingObservation() {
     return Column(
@@ -424,7 +448,10 @@ class _DryTestCScreenState extends State<DryTestCScreen>
                   ),
                   const SizedBox(height: 6),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFFFFE6D8),
                       borderRadius: BorderRadius.circular(12),
@@ -453,7 +480,10 @@ class _DryTestCScreenState extends State<DryTestCScreen>
                   ),
                   const SizedBox(height: 6),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 255, 238, 220),
                       borderRadius: BorderRadius.circular(12),
@@ -614,7 +644,8 @@ class _SaltCResultScreenState extends State<SaltCResultScreen>
                       )
                     else
                       ...widget.preliminaryAnswers.entries.map((entry) {
-                        final correctAns = prelimCorrect[entry.key] ?? 'Not found';
+                        final correctAns =
+                            prelimCorrect[entry.key] ?? 'Not found';
                         final isCorrect = entry.value == correctAns;
 
                         String title;
@@ -651,7 +682,9 @@ class _SaltCResultScreenState extends State<SaltCResultScreen>
                             ),
                             child: ListTile(
                               contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 10),
+                                horizontal: 16,
+                                vertical: 10,
+                              ),
                               leading: Icon(
                                 isCorrect ? Icons.check_circle : Icons.cancel,
                                 color: isCorrect ? Colors.green : Colors.red,
@@ -684,12 +717,16 @@ class _SaltCResultScreenState extends State<SaltCResultScreen>
 
                     const Text(
                       'Dry Test Answers:',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 16),
 
                     ...widget.tests.map((test) {
-                      final ans = widget.userAnswers[test.id] ?? 'No answer selected';
+                      final ans =
+                          widget.userAnswers[test.id] ?? 'No answer selected';
                       final correctAns = dryCorrect[test.id] ?? 'Not found';
                       final isCorrect = ans == correctAns;
 
@@ -718,7 +755,9 @@ class _SaltCResultScreenState extends State<SaltCResultScreen>
                           ),
                           child: ListTile(
                             contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 10),
+                              horizontal: 16,
+                              vertical: 10,
+                            ),
                             leading: Icon(
                               isCorrect ? Icons.check_circle : Icons.cancel,
                               color: isCorrect ? Colors.green : Colors.red,
@@ -819,7 +858,9 @@ class _SaltCResultScreenState extends State<SaltCResultScreen>
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (_) => const WelcomeScreen()),
+                            MaterialPageRoute(
+                              builder: (_) => const WelcomeScreen(),
+                            ),
                           );
                         },
                         icon: const Icon(Icons.home_rounded),
@@ -876,9 +917,12 @@ class PlaceholderImage extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade400),
       ),
       child: Center(
-          child: Text(label,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey.shade600))),
+        child: Text(
+          label,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.grey.shade600),
+        ),
+      ),
     );
   }
 }

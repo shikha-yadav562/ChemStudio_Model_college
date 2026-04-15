@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/group_5/group5analysis_BA_SR_CA.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/b_intro.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/group_5/group5analysis_BA_SR_CA.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/b_intro.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -25,7 +25,10 @@ class _Group5AnalysisPart1State extends State<Group5AnalysisPart1>
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _animController.forward();
   }
 
@@ -45,11 +48,16 @@ class _Group5AnalysisPart1State extends State<Group5AnalysisPart1>
 
   Widget _gradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
       ),
     );
   }
@@ -64,7 +72,7 @@ class _Group5AnalysisPart1State extends State<Group5AnalysisPart1>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _gradientHeader("Test"),
-            
+
             const SizedBox(height: 6),
             const Text(
               "O.S / Filtrate + NH₄Cl + NH₄OH (till alkaline) + (NH₄)₂CO₃",
@@ -75,7 +83,11 @@ class _Group5AnalysisPart1State extends State<Group5AnalysisPart1>
             const SizedBox(height: 6),
             const Text(
               "White ppt",
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: primaryBlue),
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: primaryBlue,
+              ),
             ),
           ],
         ),
@@ -134,17 +146,24 @@ class _Group5AnalysisPart1State extends State<Group5AnalysisPart1>
             // FIX: Navigate back to Intro and clear navigation history
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const WetTestIntroBScreen()), 
+              MaterialPageRoute(
+                builder: (context) => const WetTestIntroBScreen(),
+              ),
               (route) => false,
             );
           },
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt B : Wet Test',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
           ),
         ),
       ),
@@ -157,7 +176,11 @@ class _Group5AnalysisPart1State extends State<Group5AnalysisPart1>
             children: [
               const Text(
                 "Analysis Group V",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: primaryBlue),
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: primaryBlue,
+                ),
               ),
               const SizedBox(height: 12),
               _buildTestCard(),
@@ -179,14 +202,15 @@ class _Group5AnalysisPart1State extends State<Group5AnalysisPart1>
                     icon: const Icon(Icons.arrow_forward),
                     label: const Text('Next'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          selectedOption != null ? primaryBlue : Colors.grey.shade400,
+                      backgroundColor: selectedOption != null
+                          ? primaryBlue
+                          : Colors.grey.shade400,
                       foregroundColor: Colors.white,
                       shape: const StadiumBorder(),
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

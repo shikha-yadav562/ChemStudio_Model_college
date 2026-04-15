@@ -1,6 +1,6 @@
-import 'package:ChemStudio/DB/database_helper.dart';
+import 'package:chemstudio/DB/database_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:ChemStudio/screens/DRY_TEST/B/dry_test_b.dart';
+import 'package:chemstudio/screens/DRY_TEST/B/dry_test_b.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -57,7 +57,9 @@ class _PreliminaryTestBScreenState extends State<PreliminaryTestBScreen> {
     final answers = await _dbHelper.getAnswers('SaltB_PreliminaryTest');
     print('📘 --- Preliminary Test Answers from Database ---');
     for (var row in answers) {
-      print('Question ID: ${row['question_id']} | Answer: ${row['student_answer']}');
+      print(
+        'Question ID: ${row['question_id']} | Answer: ${row['student_answer']}',
+      );
     }
     print('----------------------------------------------');
   }
@@ -104,10 +106,13 @@ class _PreliminaryTestBScreenState extends State<PreliminaryTestBScreen> {
         elevation: 2,
         centerTitle: true,
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: Text(
-            widget.isReviewMode ? "Salt B: Review Mode" : "Salt B: Preliminary Test",
+            widget.isReviewMode
+                ? "Salt B: Review Mode"
+                : "Salt B: Preliminary Test",
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -124,9 +129,9 @@ class _PreliminaryTestBScreenState extends State<PreliminaryTestBScreen> {
             Text(
               test.title,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: primaryBlue,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: primaryBlue,
+              ),
             ),
             const SizedBox(height: 12),
             Expanded(
@@ -135,9 +140,9 @@ class _PreliminaryTestBScreenState extends State<PreliminaryTestBScreen> {
                   _buildObservationCard(test),
                   const SizedBox(height: 24),
                   ShaderMask(
-                    shaderCallback: (bounds) =>
-                        const LinearGradient(colors: [accentTeal, primaryBlue])
-                            .createShader(bounds),
+                    shaderCallback: (bounds) => const LinearGradient(
+                      colors: [accentTeal, primaryBlue],
+                    ).createShader(bounds),
                     child: const Text(
                       'Based on the observation, select the correct inference:',
                       style: TextStyle(
@@ -208,7 +213,9 @@ class _PreliminaryTestBScreenState extends State<PreliminaryTestBScreen> {
                             color: backgroundColor,
                             border: Border.all(
                               color: borderColor,
-                              width: widget.isReviewMode && isCorrect ? 2.5 : 1.5,
+                              width: widget.isReviewMode && isCorrect
+                                  ? 2.5
+                                  : 1.5,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -218,7 +225,8 @@ class _PreliminaryTestBScreenState extends State<PreliminaryTestBScreen> {
                                 child: Text(
                                   opt,
                                   style: TextStyle(
-                                    fontWeight: (selectedHere ||
+                                    fontWeight:
+                                        (selectedHere ||
                                             (widget.isReviewMode && isCorrect))
                                         ? FontWeight.bold
                                         : FontWeight.normal,
@@ -232,7 +240,9 @@ class _PreliminaryTestBScreenState extends State<PreliminaryTestBScreen> {
                                   color: isCorrect ? Colors.green : Colors.red,
                                   size: 20,
                                 ),
-                              if (widget.isReviewMode && !selectedHere && isCorrect)
+                              if (widget.isReviewMode &&
+                                  !selectedHere &&
+                                  isCorrect)
                                 Icon(
                                   Icons.check_circle_outline,
                                   color: Colors.green,
@@ -259,19 +269,26 @@ class _PreliminaryTestBScreenState extends State<PreliminaryTestBScreen> {
                     label: const Text("Previous"),
                   ),
                 ElevatedButton.icon(
-                  onPressed:
-                      widget.isReviewMode ? _next : (selected != null ? _next : null),
-                  icon: Icon(_index == _tests.length - 1
-                      ? Icons.check_circle_outline
-                      : Icons.arrow_forward),
-                  label: Text(_index == _tests.length - 1
-                      ? "Proceed to Dry Test"
-                      : "Next"),
+                  onPressed: widget.isReviewMode
+                      ? _next
+                      : (selected != null ? _next : null),
+                  icon: Icon(
+                    _index == _tests.length - 1
+                        ? Icons.check_circle_outline
+                        : Icons.arrow_forward,
+                  ),
+                  label: Text(
+                    _index == _tests.length - 1
+                        ? "Proceed to Dry Test"
+                        : "Next",
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryBlue,
                     foregroundColor: Colors.white,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
                   ),
                 ),
               ],

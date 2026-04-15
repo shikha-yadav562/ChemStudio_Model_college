@@ -4,7 +4,7 @@
 [1m+++ b/lib/DB/database_helper.dart[m
 [36m@@ -1,11 +1,11 @@[m
  import 'dart:io';[m
-[31m-import 'package:ChemStudio/models/group_status.dart';[m
+[31m-import 'package:chemstudio/models/group_status.dart';[m
  import 'package:sqflite/sqflite.dart';[m
  import 'package:path/path.dart';[m
  [m
@@ -320,10 +320,10 @@
 [1m--- a/lib/screens/DRY_TEST/A/dry_test_a.dart[m
 [1m+++ b/lib/screens/DRY_TEST/A/dry_test_a.dart[m
 [36m@@ -1,5 +1,4 @@[m
- import 'package:ChemStudio/DB/database_helper.dart';[m
-[31m-import 'package:ChemStudio/screens/WET_TEST/C_WET/correct_answers.dart';[m
+ import 'package:chemstudio/DB/database_helper.dart';[m
+[31m-import 'package:chemstudio/screens/WET_TEST/C_WET/correct_answers.dart';[m
  import 'package:flutter/material.dart';[m
- import 'package:ChemStudio/screens/WET_TEST/A_WET/a_intro.dart';[m
+ import 'package:chemstudio/screens/WET_TEST/A_WET/a_intro.dart';[m
  import '../../welcome_screen.dart';[m
 [36m@@ -44,28 +43,20 @@[m [mclass _DryTestAScreenState extends State<DryTestAScreen>[m
  [m

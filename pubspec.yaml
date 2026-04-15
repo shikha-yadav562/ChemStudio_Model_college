@@ -1,5 +1,5 @@
-name: ChemStudio
-description: "ChemStudio - Digital Salt Analysis Lab"
+name: chemstudio
+description: "chemstudio - Digital Salt Analysis Lab"
 publish_to: 'none'
 
 version: 1.0.0+1

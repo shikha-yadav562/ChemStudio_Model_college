@@ -40,7 +40,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 end: Alignment.centerRight,
               ).createShader(bounds),
               child: const Text(
-                "ChemStudio",
+                "chemstudio",
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
@@ -75,7 +75,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(27),
@@ -133,7 +136,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 
-  Widget _buildSaltCard(String letter, String title, double width, double height) {
+  Widget _buildSaltCard(
+    String letter,
+    String title,
+    double width,
+    double height,
+  ) {
     bool isSelected = selectedSalt == letter;
 
     return GestureDetector(

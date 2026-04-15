@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ChemStudio/screens/DRY_TEST/B/dry_test_b.dart'; 
+import 'package:chemstudio/screens/DRY_TEST/B/dry_test_b.dart';
 import '../../welcome_screen.dart'; // Ensure correct path for WelcomeScreen
 
 const Color primaryBlue = Color(0xFF004C91);
@@ -18,12 +18,18 @@ class PossibleRadicalsBScreen extends StatefulWidget {
   });
 
   @override
-  State<PossibleRadicalsBScreen> createState() => _PossibleRadicalsBScreenState();
+  State<PossibleRadicalsBScreen> createState() =>
+      _PossibleRadicalsBScreenState();
 }
 
 class _PossibleRadicalsBScreenState extends State<PossibleRadicalsBScreen> {
   final List<String> _radicals = [
-    'Cu²⁺', 'NH₄⁺', 'Pb²⁺', 'Fe³⁺', 'Ba²⁺', 'Ni²⁺',
+    'Cu²⁺',
+    'NH₄⁺',
+    'Pb²⁺',
+    'Fe³⁺',
+    'Ba²⁺',
+    'Ni²⁺',
   ];
 
   final Set<String> _selectedRadicals = {};
@@ -105,7 +111,9 @@ class _PossibleRadicalsBScreenState extends State<PossibleRadicalsBScreen> {
                   return Container(
                     margin: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color: isSelected ? accentTeal.withOpacity(0.1) : Colors.white,
+                      color: isSelected
+                          ? accentTeal.withOpacity(0.1)
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                         color: isSelected ? accentTeal : Colors.grey.shade300,
@@ -117,7 +125,9 @@ class _PossibleRadicalsBScreenState extends State<PossibleRadicalsBScreen> {
                         radical,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                          fontWeight: isSelected
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                           color: isSelected ? accentTeal : Colors.black87,
                         ),
                       ),
@@ -143,7 +153,8 @@ class _PossibleRadicalsBScreenState extends State<PossibleRadicalsBScreen> {
                       MaterialPageRoute(
                         builder: (_) => DryTestBScreen(
                           preliminaryAnswers: widget.preliminaryAnswers,
-                          startIndex: 2, // This tells the screen to open at the Flame Test
+                          startIndex:
+                              2, // This tells the screen to open at the Flame Test
                         ),
                       ),
                     );
@@ -172,7 +183,10 @@ class _PossibleRadicalsBScreenState extends State<PossibleRadicalsBScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryBlue,
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
                   ),
                 ),
               ],

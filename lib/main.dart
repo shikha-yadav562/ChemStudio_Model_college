@@ -2,13 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:ChemStudio/DB/database_helper.dart';
+import 'package:chemstudio/DB/database_helper.dart';
 import 'screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-   // 🔴 TEMPORARY – RUN ONCE
+  // 🔴 TEMPORARY – RUN ONCE
   //await DatabaseHelper.instance.resetDatabase();
 
   // ✅ Use FFI only for desktop (Windows/Linux/Mac)
@@ -18,7 +18,7 @@ void main() async {
   }
 
   // ✅ Initialize database before app runs
- await DatabaseHelper.instance.database;
+  await DatabaseHelper.instance.database;
 
   // ⚠️ Optional: Uncomment below to clear all data every time app starts
   // await DatabaseHelper.instance.clearAllAnswers();
@@ -32,17 +32,17 @@ void main() async {
   }
 
   // ✅ Run the app
-  runApp(const ChemStudioApp());
+  runApp(const chemstudioApp());
 }
 
-class ChemStudioApp extends StatelessWidget {
-  const ChemStudioApp({super.key});
+class chemstudioApp extends StatelessWidget {
+  const chemstudioApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'ChemStudio',
+      title: 'chemstudio',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF004C91)),
         useMaterial3: true,

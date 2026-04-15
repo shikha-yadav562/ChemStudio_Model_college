@@ -1,10 +1,11 @@
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/models/group_status.dart';
-import 'package:ChemStudio/screens/WET_TEST/A_WET/WetTestAFinalResultScreen.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/models/group_status.dart';
+import 'package:chemstudio/screens/WET_TEST/A_WET/WetTestAFinalResultScreen.dart';
 import 'package:flutter/material.dart';
 import '../group_5/group5_detection.dart';
 import '../a_intro.dart';
-import 'package:ChemStudio/screens/WET_TEST/A_WET/group0/group0analysis.dart';
+import 'package:chemstudio/screens/WET_TEST/A_WET/group0/group0analysis.dart';
+
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
 
@@ -17,7 +18,6 @@ class saltACo2ConfirmedPage extends StatefulWidget {
 
 class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
     with SingleTickerProviderStateMixin {
-
   late final AnimationController _animController;
   late final Animation<double> _fadeSlide;
 
@@ -43,7 +43,10 @@ class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswer();
     _animController.forward();
   }
@@ -86,11 +89,13 @@ class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
 
     // 4️⃣ Navigate
     if (!mounted) return;
-    
+
     if (presentCount >= 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const WetTestAFinalResultScreen(salt: 'A')),
+        MaterialPageRoute(
+          builder: (_) => const WetTestAFinalResultScreen(salt: 'A'),
+        ),
       );
     } else {
       Navigator.pushReplacement(
@@ -112,11 +117,16 @@ class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
 
   Widget _buildGradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
       ),
     );
   }
@@ -136,7 +146,11 @@ class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
               'Dissolve the black ppt of group IV in aquaregia '
               '(conc. HCl + conc. HNO₃ in 3:1 proportion) dilute with water. '
               'Use this solution for C.T.',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: primaryBlue),
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: primaryBlue,
+              ),
             ),
           ],
         ),
@@ -159,8 +173,14 @@ class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
             const Divider(height: 22),
             _buildGradientHeader('Observation'),
             const SizedBox(height: 6),
-            Text(_test.observation,
-                style: const TextStyle(color: primaryBlue, fontWeight: FontWeight.bold, fontSize: 15)),
+            Text(
+              _test.observation,
+              style: const TextStyle(
+                color: primaryBlue,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
           ],
         ),
       ),
@@ -176,11 +196,16 @@ class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
         elevation: 2,
         centerTitle: true,
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: Text(
             'Salt A : Wet Test',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
           ),
         ),
         leading: IconButton(
@@ -195,8 +220,10 @@ class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-              .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -204,10 +231,10 @@ class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
               children: [
                 Text(
                   _test.title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Expanded(
@@ -230,18 +257,26 @@ class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
                               duration: const Duration(milliseconds: 200),
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: selectedHere ? accentTeal.withOpacity(0.1) : Colors.white,
+                                color: selectedHere
+                                    ? accentTeal.withOpacity(0.1)
+                                    : Colors.white,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: selectedHere ? accentTeal : Colors.grey.shade300,
+                                  color: selectedHere
+                                      ? accentTeal
+                                      : Colors.grey.shade300,
                                   width: 1.5,
                                 ),
                               ),
                               child: Text(
                                 opt,
                                 style: TextStyle(
-                                  fontWeight: selectedHere ? FontWeight.bold : FontWeight.normal,
-                                  color: selectedHere ? primaryBlue : Colors.black87,
+                                  fontWeight: selectedHere
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                  color: selectedHere
+                                      ? primaryBlue
+                                      : Colors.black87,
                                 ),
                               ),
                             ),
@@ -266,7 +301,10 @@ class _saltACo2ConfirmedPageState extends State<saltACo2ConfirmedPage>
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],

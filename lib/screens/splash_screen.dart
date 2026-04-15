@@ -48,10 +48,7 @@ class _SplashScreenState extends State<SplashScreen>
         fit: StackFit.expand,
         children: [
           // Background image
-          Image.asset(
-            'assets/images/chem_bg.png',
-            fit: BoxFit.cover,
-          ),
+          Image.asset('assets/images/chem_bg.png', fit: BoxFit.cover),
 
           // Soft blur overlay
           BackdropFilter(
@@ -80,12 +77,12 @@ class _SplashScreenState extends State<SplashScreen>
                       // App name with gradient text
                       ShaderMask(
                         shaderCallback: (bounds) => const LinearGradient(
-                          colors: [ Color(0xFF00A6A6),Color(0xFF004C91)],
+                          colors: [Color(0xFF00A6A6), Color(0xFF004C91)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ).createShader(bounds),
                         child: Text(
-                          "ChemStudio",
+                          "chemstudio",
                           style: TextStyle(
                             fontSize: size.width < 500 ? 32 : 48,
                             fontWeight: FontWeight.bold,
@@ -95,7 +92,6 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                       ),
 
-                    
                       // Powered by Model College
                       const Text(
                         "Powered by Model College",

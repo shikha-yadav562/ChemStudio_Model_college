@@ -1,8 +1,8 @@
 // group6_analysis.dart - CORRECTED VERSION (Only Mg²⁺)
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/b_intro.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/group0/group0analysis.dart';
-import 'package:ChemStudio/screens/WET_TEST/B_WET/group_6/group6_ct_MG.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/b_intro.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/group0/group0analysis.dart';
+import 'package:chemstudio/screens/WET_TEST/B_WET/group_6/group6_ct_MG.dart';
 
 import 'package:flutter/material.dart';
 
@@ -46,7 +46,10 @@ class _Group6AnalysisScreenState extends State<Group6AnalysisScreen>
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswers();
     _animController.forward();
   }
@@ -82,9 +85,7 @@ class _Group6AnalysisScreenState extends State<Group6AnalysisScreen>
     // Only one option - go to Mg CT screen
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (_) => const Group6CTMgScreen(),
-      ),
+      MaterialPageRoute(builder: (_) => const Group6CTMgScreen()),
     );
   }
 
@@ -115,15 +116,17 @@ class _Group6AnalysisScreenState extends State<Group6AnalysisScreen>
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const WetTestIntroBScreen()),
+              MaterialPageRoute(
+                builder: (context) => const WetTestIntroBScreen(),
+              ),
               (route) => false,
             );
           },
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) =>
-              const LinearGradient(colors: [accentTeal, primaryBlue])
-                  .createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt B : Wet Test',
             style: TextStyle(
@@ -137,19 +140,22 @@ class _Group6AnalysisScreenState extends State<Group6AnalysisScreen>
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position:
-              Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-                  .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(test.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold)),
+                Text(
+                  test.title,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView(
@@ -217,7 +223,9 @@ class _Group6AnalysisScreenState extends State<Group6AnalysisScreen>
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 12),
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],
@@ -232,9 +240,9 @@ class _Group6AnalysisScreenState extends State<Group6AnalysisScreen>
 
   Widget _buildInferenceHeader() {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: const Text(
         'Select the correct inference:',
         style: TextStyle(
@@ -278,13 +286,16 @@ class _Group6AnalysisScreenState extends State<Group6AnalysisScreen>
 
   Widget _gradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
       ),
     );
   }

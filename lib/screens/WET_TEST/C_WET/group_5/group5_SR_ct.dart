@@ -1,7 +1,7 @@
 // group5_ct_sr.dart
-import 'package:ChemStudio/DB/database_helper.dart';
-import 'package:ChemStudio/models/group_status.dart';
-import 'package:ChemStudio/screens/WET_TEST/C_WET/WetTestCFinalResultScreen.dart';
+import 'package:chemstudio/DB/database_helper.dart';
+import 'package:chemstudio/models/group_status.dart';
+import 'package:chemstudio/screens/WET_TEST/C_WET/WetTestCFinalResultScreen.dart';
 import 'package:flutter/material.dart';
 import '../group0/group0analysis.dart';
 import '../group_6/group6_detection.dart';
@@ -19,8 +19,7 @@ class Group5CTSrScreen extends StatefulWidget {
 
 class _Group5CTSrScreenState extends State<Group5CTSrScreen>
     with SingleTickerProviderStateMixin {
-  
-  String? _selectedOption; 
+  String? _selectedOption;
   bool get _isSelected => _selectedOption != null;
 
   late final AnimationController _animController;
@@ -32,10 +31,10 @@ class _Group5CTSrScreenState extends State<Group5CTSrScreen>
   late final WetTestItem _test = WetTestItem(
     id: 24, // Sequential ID
     title: 'C.T for Sr²⁺',
-    procedure: 'Above acetate solution + dil. H₂SO₄', 
+    procedure: 'Above acetate solution + dil. H₂SO₄',
     observation: 'White ppt on warming',
     options: ['Sr²⁺ confirmed'],
-    correct: 'Sr²⁺ confirmed', 
+    correct: 'Sr²⁺ confirmed',
   );
 
   @override
@@ -45,13 +44,19 @@ class _Group5CTSrScreenState extends State<Group5CTSrScreen>
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
-    _fadeSlide = CurvedAnimation(parent: _animController, curve: Curves.easeInOut);
+    _fadeSlide = CurvedAnimation(
+      parent: _animController,
+      curve: Curves.easeInOut,
+    );
     _loadSavedAnswer();
     _animController.forward();
   }
 
   Future<void> _loadSavedAnswer() async {
-    final studentAnswer = await _dbHelper.getStudentAnswer(_tableName, _test.id);
+    final studentAnswer = await _dbHelper.getStudentAnswer(
+      _tableName,
+      _test.id,
+    );
     if (studentAnswer != null) {
       setState(() {
         _selectedOption = studentAnswer;
@@ -88,11 +93,13 @@ class _Group5CTSrScreenState extends State<Group5CTSrScreen>
 
     // 4️⃣ Navigate accordingly
     if (!mounted) return;
-    
+
     if (presentCount >= 2) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const WetTestCFinalResultScreen(salt: 'C')),
+        MaterialPageRoute(
+          builder: (_) => const WetTestCFinalResultScreen(salt: 'C'),
+        ),
       );
     } else {
       Navigator.pushReplacement(
@@ -114,12 +121,15 @@ class _Group5CTSrScreenState extends State<Group5CTSrScreen>
 
   Widget _buildGradientHeader(String text) {
     return ShaderMask(
-      shaderCallback: (bounds) =>
-          const LinearGradient(colors: [accentTeal, primaryBlue]).createShader(bounds),
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [accentTeal, primaryBlue],
+      ).createShader(bounds),
       child: Text(
         text,
         style: const TextStyle(
-          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
         ),
       ),
     );
@@ -167,7 +177,11 @@ class _Group5CTSrScreenState extends State<Group5CTSrScreen>
             const SizedBox(height: 8),
             Text(
               observation,
-              style: TextStyle(color: primaryBlue, fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(
+                color: primaryBlue,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ],
         ),
@@ -192,29 +206,38 @@ class _Group5CTSrScreenState extends State<Group5CTSrScreen>
           ),
         ),
         title: ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(colors: [accentTeal, primaryBlue])
-              .createShader(bounds),
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [accentTeal, primaryBlue],
+          ).createShader(bounds),
           child: const Text(
             'Salt C : Wet Test',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
           ),
         ),
       ),
       body: FadeTransition(
         opacity: _fadeSlide,
         child: SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0.1, 0.03), end: Offset.zero)
-              .animate(_fadeSlide),
+          position: Tween<Offset>(
+            begin: const Offset(0.1, 0.03),
+            end: Offset.zero,
+          ).animate(_fadeSlide),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(_test.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(color: primaryBlue, fontWeight: FontWeight.bold)),
+                Text(
+                  _test.title,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: primaryBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView(
@@ -241,15 +264,21 @@ class _Group5CTSrScreenState extends State<Group5CTSrScreen>
                                     : Colors.white,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: selectedHere ? accentTeal : Colors.grey.shade300,
+                                  color: selectedHere
+                                      ? accentTeal
+                                      : Colors.grey.shade300,
                                   width: 1.5,
                                 ),
                               ),
                               child: Text(
                                 opt,
                                 style: TextStyle(
-                                  fontWeight: selectedHere ? FontWeight.bold : FontWeight.normal,
-                                  color: selectedHere ? accentTeal : Colors.black87,
+                                  fontWeight: selectedHere
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                  color: selectedHere
+                                      ? accentTeal
+                                      : Colors.black87,
                                 ),
                               ),
                             ),
@@ -274,7 +303,10 @@ class _Group5CTSrScreenState extends State<Group5CTSrScreen>
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryBlue,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],
