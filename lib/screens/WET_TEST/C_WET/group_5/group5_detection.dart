@@ -35,9 +35,9 @@ class _Group5DetectionScreenState extends State<Group5DetectionScreen>
       title: 'Group V Detection',
       procedure:
           'O.S/Filtrate (Remove H₂S) + NH₄Cl(equal) + NH₄OH (till alkaline to litmus) + (NH₄)₂CO₃',
-      observation: 'White ppt',
+      observation: 'No ppt',
       options: ['Group-V is present', 'Group-V is Absent'],
-      correct: 'Group-V is present',
+      correct: 'Group-V is Absent',
     ),
   ];
 

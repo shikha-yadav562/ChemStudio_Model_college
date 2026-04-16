@@ -53,9 +53,9 @@ class _WetTestCGroupZeroScreenState extends State<WetTestCGroupZeroScreen>
     title: 'Analysis of Group Zero',
     procedure:
         'Take Original Solution (O.S.) in a test tube, add NaOH solution, and heat gently. Hold moist turmeric paper near the mouth of the test tube.',
-    observation: 'No smell of Ammonia Gas',
+    observation: ' Evolution of NH4 gas , which turns moist turmeric paper brown / red ',
     options: ['Group Zero is present', 'Group Zero is absent'],
-    correct: 'Group Zero is absent',
+    correct: 'Group Zero is present',
   );
 
   @override
