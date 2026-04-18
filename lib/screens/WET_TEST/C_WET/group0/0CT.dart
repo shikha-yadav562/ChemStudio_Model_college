@@ -3,7 +3,6 @@ import 'package:chemstudio/screens/WET_TEST/C_WET/group1/group1detection.dart';
 import 'package:chemstudio/screens/WET_TEST/C_WET/WetTestCFinalResultScreen.dart';
 import 'package:flutter/material.dart';
 import 'group0analysis.dart';
-import '../c_intro.dart';
 import 'package:chemstudio/DB/database_helper.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
@@ -129,12 +128,10 @@ class _WetTestCGroupZeroCTScreenState extends State<WetTestCGroupZeroCTScreen>
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: primaryBlue),
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => const WetTestIntroCScreen()),
-              (route) => false,
-            );
-          },
+  Navigator.popUntil(context, (route) {
+    return route.settings.name == '/c_intro';
+  });
+}
         ),
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(

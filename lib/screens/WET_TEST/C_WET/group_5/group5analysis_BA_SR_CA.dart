@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'group5_BA_ct.dart';
 import 'group5_CA_ct.dart';
 import 'group5_SR_ct.dart';
-import '../c_intro.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -28,12 +27,10 @@ class _Analysis_BA_SR_CAState extends State<Analysis_BA_SR_CA> {
         leading: IconButton(
     icon: const Icon(Icons.arrow_back, color: primaryBlue),
     onPressed: () {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const WetTestIntroCScreen()), // Replace with your actual class name in c_intro.dart
-        (route) => false, // This clears the navigation stack
-      );
-    },
+  Navigator.popUntil(context, (route) {
+    return route.settings.name == '/c_intro';
+  });
+},
   ),
         title: ShaderMask(
           shaderCallback: (bounds) =>

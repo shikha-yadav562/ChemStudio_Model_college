@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:chemstudio/screens/WET_TEST/C_WET/group0/group0analysis.dart';
 import 'package:chemstudio/DB/database_helper.dart'; // ⚠️ TEMPORARY: Added for database reset
-import '../../welcome_screen.dart';
+import 'package:chemstudio/screens/DRY_TEST/C/dry_test_c.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 
 class WetTestIntroCScreen extends StatelessWidget {
-  const WetTestIntroCScreen({super.key});
+  final Map<int, String>? userAnswers;
+  final Map<int, String>? preliminaryAnswers;
+  final List<TestItem>? tests;
 
+  const WetTestIntroCScreen({
+    super.key,
+    this.userAnswers,
+    this.preliminaryAnswers,
+    this.tests,
+  });
   // ⚠️ TEMPORARY: Database reset function - REMOVE AFTER TESTING
   Future<void> _resetDatabase(BuildContext context) async {
     try {
@@ -47,12 +55,8 @@ class WetTestIntroCScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: primaryBlue),
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-              (route) => false,
-            );
-          },
+  Navigator.pop(context);
+},
         ),
         centerTitle: true,
         title: const Text(

@@ -3,7 +3,6 @@ import 'package:chemstudio/models/group_status.dart';
 import 'package:chemstudio/screens/WET_TEST/C_WET/WetTestCFinalResultScreen.dart';
 import 'package:flutter/material.dart';
 import '../group_5/group5_detection.dart';
-import '../c_intro.dart';
 import 'package:chemstudio/screens/WET_TEST/C_WET/group0/group0analysis.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
@@ -209,11 +208,11 @@ class _Mn2ConfirmedPageState extends State<Mn2ConfirmedPage>
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () => Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (_) => const WetTestIntroCScreen()),
-            (route) => false,
-          ),
+          onPressed: () {
+  Navigator.popUntil(context, (route) {
+    return route.settings.name == '/c_intro';
+  });
+},
         ),
       ),
       body: FadeTransition(

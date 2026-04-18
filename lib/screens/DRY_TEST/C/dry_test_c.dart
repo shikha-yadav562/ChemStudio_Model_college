@@ -829,12 +829,17 @@ class _SaltCResultScreenState extends State<SaltCResultScreen>
                       height: 50,
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const WetTestIntroCScreen(),
-                            ),
-                          );
+                          Navigator.push(
+  context,
+  MaterialPageRoute(
+    settings: const RouteSettings(name: '/c_intro'), // ✅ ADD THIS
+    builder: (_) => WetTestIntroCScreen(
+      userAnswers: widget.userAnswers,
+      tests: widget.tests,
+      preliminaryAnswers: widget.preliminaryAnswers,
+    ),
+  ),
+);
                         },
                         icon: const Icon(Icons.science_rounded),
                         label: const Text(
