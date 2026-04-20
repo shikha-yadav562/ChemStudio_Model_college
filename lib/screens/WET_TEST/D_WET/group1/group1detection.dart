@@ -58,27 +58,12 @@ class _WetTestDGroupOneDetectionScreenState
       curve: Curves.easeInOut,
     );
 
-    _loadSavedAnswer();
-
     if (widget.restoredSelection != null) {
       _selectedOption = widget.restoredSelection;
     }
 
     _animController.forward();
   }
-
-  Future<void> _loadSavedAnswer() async {
-    final saved = await _dbHelper.getStudentAnswer(
-      _tableName,
-      _tests[_index].id,
-    );
-    if (saved != null && widget.restoredSelection == null) {
-      setState(() {
-        _selectedOption = saved;
-      });
-    }
-  }
-
   /// ONLY save student answer – NO group decision here
   Future<void> _onOptionSelected(WetTestItem test, String selected) async {
     setState(() => _selectedOption = selected);
@@ -96,6 +81,7 @@ class _WetTestDGroupOneDetectionScreenState
         ),
       );
     } else if (_selectedOption == 'Group-I is absent') {
+      await _dbHelper.clearGroupCTAnswers(_tableName, [5]);
       // ✅ ADD THIS: Mark Group 1 as absent before navigating
       await _dbHelper.insertGroupDecision(
         salt: 'D',

@@ -54,21 +54,7 @@ class _Group5DetectionScreenState extends State<Group5DetectionScreen>
       parent: _animController,
       curve: Curves.easeInOut,
     );
-
-    _loadSavedAnswer();
     _animController.forward();
-  }
-
-  Future<void> _loadSavedAnswer() async {
-    final saved = await _dbHelper.getStudentAnswer(
-      _tableName,
-      _tests[_index].id,
-    );
-    if (saved != null) {
-      setState(() {
-        _selectedOption = saved;
-      });
-    }
   }
 
   /// Save ONLY detection answer
@@ -86,6 +72,7 @@ class _Group5DetectionScreenState extends State<Group5DetectionScreen>
         MaterialPageRoute(builder: (_) => const Group5AnalysisPart1()),
       );
     } else if (_selectedOption == 'Group-V is Absent') {
+      await _dbHelper.clearGroupCTAnswers(_tableName, [22,23,24]);
       // ✅ ADD THIS: Mark Group 5 as absent before navigating
       await _dbHelper.insertGroupDecision(
         salt: 'B',

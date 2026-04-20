@@ -50,8 +50,6 @@ class _DryTestDScreenState extends State<DryTestDScreen>
     );
     _animController.forward();
 
-    _loadSavedAnswers();
-
     // Save correct answers for Dry Test
     for (var test in _tests) {
       dbHelper.saveCorrectAnswer('SaltD_DryTest', test.id, test.correct);
@@ -60,18 +58,6 @@ class _DryTestDScreenState extends State<DryTestDScreen>
     print("🧪 Preliminary Answers Received: ${widget.preliminaryAnswers}");
   }
 
-  Future<void> _loadSavedAnswers() async {
-    final data = await dbHelper.getAnswers(_tableName);
-    if (data.isNotEmpty) {
-      setState(() {
-        for (var row in data) {
-          if (row['student_answer'] != null) {
-            _answers[row['question_id']] = row['student_answer'];
-          }
-        }
-      });
-    }
-  }
 
   static List<TestItem> _generateTests() {
     return [

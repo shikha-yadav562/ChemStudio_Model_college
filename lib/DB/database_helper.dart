@@ -93,6 +93,16 @@ class DatabaseHelper {
     }
   }
 
+Future<void> clearGroupCTAnswers(String tableName, List<int> questionIds) async {
+  final db = await database;
+  for (final id in questionIds) {
+    await db.delete(
+      tableName,
+      where: 'question_id = ?',
+      whereArgs: [id],
+    );
+  }
+}
   // Save correct answer using UPDATE or INSERT
   Future<void> saveCorrectAnswer(
     String tableName,

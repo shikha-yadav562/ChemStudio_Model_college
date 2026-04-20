@@ -56,23 +56,8 @@ class _WetTestDGroupTwoDetectionScreenState
       parent: _animController,
       curve: Curves.easeInOut,
     );
-
-    _loadSavedAnswer();
     _animController.forward();
   }
-
-  Future<void> _loadSavedAnswer() async {
-    final saved = await _dbHelper.getStudentAnswer(
-      _tableName,
-      _tests[_index].id,
-    );
-    if (saved != null) {
-      setState(() {
-        _selectedOption = saved;
-      });
-    }
-  }
-
   /// Save ONLY detection answer
   Future<void> _onOptionSelected(WetTestItem test, String selected) async {
     setState(() => _selectedOption = selected);
@@ -90,6 +75,7 @@ class _WetTestDGroupTwoDetectionScreenState
         ),
       );
     } else if (_selectedOption == 'Group-II is absent') {
+      await _dbHelper.clearGroupCTAnswers(_tableName, [8,9]);
       // ✅ ADD THIS: Mark Group 2 as absent before navigating
       await _dbHelper.insertGroupDecision(
         salt: 'D',

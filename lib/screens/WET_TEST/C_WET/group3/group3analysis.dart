@@ -49,28 +49,7 @@ class _WetTestCGroupThreeAnalysisScreenState
       parent: _animController,
       curve: Curves.easeInOut,
     );
-    _loadSavedAnswer();
     _animController.forward();
-  }
-
-  Future<void> _loadSavedAnswer() async {
-    final List<Map<String, dynamic>> data = await _dbHelper.getAnswers(
-      _tableName,
-    );
-
-    String? savedAnswer;
-
-    // Loop through each row and find the matching question_id
-    for (final row in data) {
-      if (row['question_id'] == _test.id) {
-        savedAnswer = row['student_answer'] as String?;
-        break;
-      }
-    }
-
-    setState(() {
-      _selectedOption = savedAnswer;
-    });
   }
 
   // ✅ FIXED: Only save student answer - NO correct answer!

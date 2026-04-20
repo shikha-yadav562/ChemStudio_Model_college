@@ -50,28 +50,9 @@ class _Group6AnalysisScreenState extends State<Group6AnalysisScreen>
       parent: _animController,
       curve: Curves.easeInOut,
     );
-    _loadSavedAnswers();
+  
     _animController.forward();
   }
-
-  Future<void> _loadSavedAnswers() async {
-    final data = await _dbHelper.getAnswers(_tableName);
-
-    final testId = _tests[_index].id;
-    String? savedAnswer;
-
-    for (final row in data) {
-      if (row['question_id'] == testId) {
-        savedAnswer = row['student_answer'] as String?;
-        break;
-      }
-    }
-
-    setState(() {
-      _selectedOption = savedAnswer;
-    });
-  }
-
   Future<void> _onOptionSelected(WetTestItem test, String selected) async {
     setState(() => _selectedOption = selected);
 

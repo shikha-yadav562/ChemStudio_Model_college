@@ -49,19 +49,9 @@ class _WetTestCGroupThreeCTFeScreenState
       parent: _animController,
       curve: Curves.easeInOut,
     );
-
-    _loadSavedAnswer();
     _animController.forward();
   }
 
-  Future<void> _loadSavedAnswer() async {
-    final answer = await _dbHelper.getStudentAnswer(_tableName, _test.id);
-    if (answer != null) {
-      setState(() {
-        _selectedOption = answer;
-      });
-    }
-  }
 
   // ✅ FIXED: Just select, don't save or navigate
   void _onOptionTapped(String option) {

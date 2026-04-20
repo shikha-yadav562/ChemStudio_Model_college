@@ -59,22 +59,9 @@ class _WetTestCGroupOneAnalysisScreenState
       parent: _animController,
       curve: Curves.easeInOut,
     );
-    _loadSavedAnswers();
     _animController.forward();
   }
 
-  Future<void> _loadSavedAnswers() async {
-    // Load saved answers for persistence across sessions
-    final data = await _dbHelper.getAnswers(_tableName);
-    setState(() {
-      final testId = _tests[_index].id;
-      // .firstWhereOrNull is now available
-      final savedAnswer = data.firstWhereOrNull(
-        (row) => row['question_id'] == testId,
-      )?['student_answer'];
-      _selectedOption = savedAnswer;
-    });
-  }
 
   Future<void> _onOptionSelected(WetTestItem test, String selected) async {
     setState(() => _selectedOption = selected);

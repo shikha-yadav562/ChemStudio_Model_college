@@ -3,12 +3,11 @@ import 'package:chemstudio/DB/database_helper.dart';
 import 'package:chemstudio/models/group_status.dart';
 import 'package:chemstudio/screens/WET_TEST/C_WET/wet_test_answers.dart';
 
-/// ===============================================================
-/// FINAL RESULT SCREEN FOR MODULE C
-/// ===============================================================
+const Color primaryBlue = Color(0xFF004C91);
+const Color accentTeal = Color(0xFF00A6A6);
+
 class WetTestCFinalResultScreen extends StatefulWidget {
   final String salt;
-
   const WetTestCFinalResultScreen({super.key, required this.salt});
 
   @override
@@ -18,18 +17,19 @@ class WetTestCFinalResultScreen extends StatefulWidget {
 
 class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
   bool isLoading = true;
+  bool _showRecheck = false;
 
   Map<int, GroupStatus> studentGroups = {};
   List<String> selectedIons = [];
+  Map<int, String?> _studentCTAnswers = {};
 
-  // ✅ Define which ion is CORRECT for each group (Module C)
   final Map<int, String> correctIonsPerGroup = {
     0: 'NH4+',
     1: 'Pb2+',
     2: 'Cu2+',
-    3: 'Fe3+', // ✅ Only Fe³⁺ is correct for Group 3
+    3: 'Fe3+',
     4: 'Ni2+',
-    5: 'Ba2+', // ✅ Only Ba²⁺ is correct for Group 5
+    5: 'Ba2+',
     6: 'Mg2+',
   };
 
@@ -50,6 +50,42 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
     {'ion': 'Mg2+', 'group': 6, 'questionId': 27},
   ];
 
+  // ── Correct answers for Salt C ──────────────────────────────────
+  static const Map<int, GroupStatus> _correctGroups = {
+    0: GroupStatus.present,
+    1: GroupStatus.absent,
+    2: GroupStatus.absent,
+    3: GroupStatus.present,
+    4: GroupStatus.absent,
+    5: GroupStatus.absent,
+    6: GroupStatus.absent,
+  };
+
+  static const Map<int, String> _correctCT = {
+    0: 'NH₄⁺ Confirmed',
+    3: 'Fe³⁺ confirmed',
+  };
+
+  static const Map<int, List<int>> _groupCTIds = {
+    0: [2],
+    1: [5],
+    2: [8, 9],
+    3: [12, 13],
+    4: [16, 17, 18, 19],
+    5: [22, 23, 24],
+    6: [27],
+  };
+
+  static const Map<int, String> _groupNames = {
+    0: 'Group 0 (NH₄⁺)',
+    1: 'Group I (Pb²⁺)',
+    2: 'Group II (Cu²⁺/As³⁺)',
+    3: 'Group III (Fe³⁺/Al³⁺)',
+    4: 'Group IV (Ni²⁺/Co²⁺/Mn²⁺/Zn²⁺)',
+    5: 'Group V (Ba²⁺/Ca²⁺/Sr²⁺)',
+    6: 'Group VI (Mg²⁺)',
+  };
+
   @override
   void initState() {
     super.initState();
@@ -57,74 +93,70 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
   }
 
   Future<void> _loadData() async {
-    studentGroups = await DatabaseHelper.instance.getStudentGroupDecisions(
-      widget.salt,
-    );
+    final db = DatabaseHelper.instance;
 
+    studentGroups = await db.getStudentGroupDecisions(widget.salt);
     await _identifySelectedIons();
+
+    // Load all CT answers for recheck
+    final Map<int, String?> ctAnswers = {};
+    for (final ids in _groupCTIds.values) {
+      for (final id in ids) {
+        ctAnswers[id] = await db.getStudentAnswer('SaltC_WetTest', id);
+      }
+    }
+    _studentCTAnswers = ctAnswers;
 
     setState(() => isLoading = false);
   }
 
-  /// 🔥 FIXED LOGIC:
-  /// Take ions that STUDENT actually attempted (CT)
-  /// Show EXACTLY TWO (even if wrong) - FOR LEARNING PURPOSE
   Future<void> _identifySelectedIons() async {
     final List<String> ions = [];
-
     for (final ct in ctTests) {
       final questionId = ct['questionId'] as int;
       final ion = ct['ion'] as String;
-
-      // ✅ Check if student attempted this CT (regardless of group status)
       final studentAnswer = await DatabaseHelper.instance.getStudentAnswer(
         'SaltC_WetTest',
         questionId,
       );
-
       if (studentAnswer != null && studentAnswer.trim().isNotEmpty) {
         ions.add(ion);
       }
     }
-
-    // Show exactly 2 ions (or less if student didn't complete 2 CTs)
     selectedIons = ions.take(2).toList();
   }
 
-  /// ✅ Check if the selected ion is CORRECT for its group
-  bool isCorrectIonForGroup(String ion, int group) {
-    return correctIonsPerGroup[group] == ion;
-  }
+  bool isCorrectIonForGroup(String ion, int group) =>
+      correctIonsPerGroup[group] == ion;
 
   Future<bool> isCTCorrect({
     required int group,
     required String ion,
     required int questionId,
   }) async {
-    // ✅ First check: Is this group even present?
     if (wetTestGroups[group] != GroupStatus.present) return false;
-
-    // ✅ Second check: Is this the CORRECT ion for this group?
     if (!isCorrectIonForGroup(ion, group)) return false;
-
-    // ✅ Third check: Did student answer the CT correctly?
     final studentAnswer = await DatabaseHelper.instance.getStudentAnswer(
       'SaltC_WetTest',
       questionId,
     );
-
     final correct = wetTestCTAnswers[ion]?.correctOption;
-
     if (studentAnswer == null || correct == null) return false;
-
     return studentAnswer.trim().toLowerCase() == correct.trim().toLowerCase();
   }
 
-  String formatIon(String ion) {
-    return ion
-        .replaceAll('2+', '²⁺')
-        .replaceAll('3+', '³⁺')
-        .replaceAll('4+', '⁴⁺');
+  String formatIon(String ion) => ion
+      .replaceAll('2+', '²⁺')
+      .replaceAll('3+', '³⁺')
+      .replaceAll('4+', '⁴⁺');
+
+  // ── Recheck helper ─────────────────────────────────────────────
+  String? _studentCTForGroup(int group) {
+    for (final id in _groupCTIds[group] ?? []) {
+      final ans = _studentCTAnswers[id];
+      if (ans != null && ans.trim().isNotEmpty) return ans;
+    }
+    return null;
   }
 
   @override
@@ -149,14 +181,11 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
         ),
         title: const Text(
           'Results',
-          style: TextStyle(
-            color: Color(0xFF00897B),
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(color: Color(0xFF00897B), fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
@@ -169,10 +198,9 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
             ),
             const SizedBox(height: 32),
 
-            /// ================= ION CARDS =================
+            // ── Ion result cards ───────────────────────────
             ...selectedIons.map((ion) {
-              final ct = ctTests.firstWhere((element) => element['ion'] == ion);
-
+              final ct = ctTests.firstWhere((e) => e['ion'] == ion);
               return FutureBuilder<bool>(
                 future: isCTCorrect(
                   group: ct['group'],
@@ -181,13 +209,10 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
                 ),
                 builder: (context, snapshot) {
                   final isCorrect = snapshot.data ?? false;
-
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
                     padding: const EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 24,
-                    ),
+                        vertical: 20, horizontal: 24),
                     decoration: BoxDecoration(
                       color: isCorrect
                           ? const Color(0xFFE8F5E9)
@@ -223,9 +248,43 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
               );
             }),
 
-            const Spacer(),
+            const SizedBox(height: 16),
 
-            /// BACK BUTTON
+            // ── RECHECK BUTTON ─────────────────────────────
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: Icon(
+                  _showRecheck
+                      ? Icons.keyboard_arrow_up
+                      : Icons.fact_check_outlined,
+                ),
+                label: Text(
+                  _showRecheck ? 'Hide Recheck' : 'Recheck All Groups',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                onPressed: () =>
+                    setState(() => _showRecheck = !_showRecheck),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryBlue,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+
+            // ── RECHECK PANEL ──────────────────────────────
+            if (_showRecheck) ...[
+              const SizedBox(height: 20),
+              ...List.generate(7, (i) => _buildGroupReviewCard(i)),
+            ],
+
+            const SizedBox(height: 16),
+
+            // ── BACK BUTTON ────────────────────────────────
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
@@ -237,9 +296,7 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: () => Navigator.pop(context),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFF00897B), width: 2),
                   padding: const EdgeInsets.symmetric(vertical: 18),
@@ -248,6 +305,255 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  // ── Group review card ──────────────────────────────────────────
+  Widget _buildGroupReviewCard(int group) {
+    final correctStatus = _correctGroups[group]!;
+    final studentStatus = studentGroups[group];
+    final groupCorrect = studentStatus == correctStatus;
+
+    final studentCT = _studentCTForGroup(group);
+    final correctCT = _correctCT[group];
+
+    final ctCorrect = correctStatus == GroupStatus.present &&
+        studentCT != null &&
+        correctCT != null &&
+        studentCT.trim().toLowerCase() == correctCT.trim().toLowerCase();
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 5, offset: Offset(0, 2)),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(colors: [accentTeal, primaryBlue]),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(14)),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  _groupNames[group]!,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                const Spacer(),
+                Icon(
+                  groupCorrect ? Icons.check_circle : Icons.cancel,
+                  color: Colors.white,
+                  size: 18,
+                ),
+              ],
+            ),
+          ),
+
+          // Group status side-by-side
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _statusBox(
+                    label: 'Your Answer',
+                    status: studentStatus,
+                    isCorrect: groupCorrect,
+                    isStudentBox: true,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _statusBox(
+                    label: 'Correct Answer',
+                    status: correctStatus,
+                    isCorrect: true,
+                    isStudentBox: false,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // CT section
+          if (studentCT != null || correctStatus == GroupStatus.present)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Divider(height: 1),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Confirmatory Test',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _ctBox(
+                          label: 'Your CT',
+                          value: studentCT ?? '— Not attempted',
+                          isCorrect: studentCT != null && ctCorrect,
+                          isWrong: studentCT != null && !ctCorrect,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: _ctBox(
+                          label: 'Correct CT',
+                          value: correctCT ?? '— Group absent',
+                          isCorrect: correctCT != null,
+                          isWrong: false,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _statusBox({
+    required String label,
+    required GroupStatus? status,
+    required bool isCorrect,
+    required bool isStudentBox,
+  }) {
+    final isPresent = status == GroupStatus.present;
+    final notAttempted = status == null;
+
+    Color bg, border, text;
+    IconData icon;
+
+    if (notAttempted) {
+      bg = Colors.grey.shade100;
+      border = Colors.grey.shade300;
+      text = Colors.grey;
+      icon = Icons.help_outline;
+    } else if (!isStudentBox) {
+      bg = const Color(0xFFE0F7FA);
+      border = accentTeal;
+      text = primaryBlue;
+      icon = isPresent
+          ? Icons.check_circle_outline
+          : Icons.remove_circle_outline;
+    } else if (isCorrect) {
+      bg = const Color(0xFFE8F5E9);
+      border = Colors.green;
+      text = Colors.green.shade800;
+      icon = Icons.check_circle;
+    } else {
+      bg = const Color(0xFFFFEBEE);
+      border = Colors.red;
+      text = Colors.red.shade800;
+      icon = Icons.cancel;
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: border, width: 1.5),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label,
+              style: TextStyle(
+                  fontSize: 10,
+                  color: text.withOpacity(0.7),
+                  fontWeight: FontWeight.w500)),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Icon(icon, color: text, size: 16),
+              const SizedBox(width: 4),
+              Text(
+                notAttempted
+                    ? 'Not reached'
+                    : (isPresent ? 'Present' : 'Absent'),
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: text),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _ctBox({
+    required String label,
+    required String value,
+    required bool isCorrect,
+    required bool isWrong,
+  }) {
+    Color bg, border, text;
+
+    if (isWrong) {
+      bg = const Color(0xFFFFEBEE);
+      border = Colors.red;
+      text = Colors.red.shade800;
+    } else if (isCorrect &&
+        value != '— Group absent' &&
+        value != '— Not attempted') {
+      bg = const Color(0xFFE8F5E9);
+      border = Colors.green;
+      text = Colors.green.shade800;
+    } else {
+      bg = const Color(0xFFE0F7FA);
+      border = accentTeal;
+      text = primaryBlue;
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: border, width: 1.5),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label,
+              style: TextStyle(
+                  fontSize: 10,
+                  color: text.withOpacity(0.7),
+                  fontWeight: FontWeight.w500)),
+          const SizedBox(height: 4),
+          Text(value,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: text)),
+        ],
       ),
     );
   }
