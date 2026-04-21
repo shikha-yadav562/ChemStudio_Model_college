@@ -5,7 +5,9 @@ import '../../welcome_screen.dart';
 const Color primaryBlue = Color(0xFF004C91);
 
 class WetTestIntroCScreen extends StatelessWidget {
-  const WetTestIntroCScreen({super.key});
+  final Map<int, String>? userAnswers;
+  final Map<int, String>? preliminaryAnswers;
+  final List<TestItem>? tests;
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +21,8 @@ class WetTestIntroCScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: primaryBlue),
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-              (route) => false,
-            );
-          },
+  Navigator.pop(context);
+},
         ),
         centerTitle: true,
         title: const Text(

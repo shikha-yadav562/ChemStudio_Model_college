@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'group5analysis_BA_SR_CA.dart';
-import '../c_intro.dart';
+
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -131,13 +131,10 @@ class _Group5AnalysisPart1State extends State<Group5AnalysisPart1>
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: primaryBlue),
           onPressed: () {
-            // FIX: Navigate back to Intro and clear navigation history
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const WetTestIntroCScreen()), 
-              (route) => false,
-            );
-          },
+  Navigator.popUntil(context, (route) {
+    return route.settings.name == '/c_intro';
+  });
+},
         ),
         title: ShaderMask(
           shaderCallback: (bounds) =>

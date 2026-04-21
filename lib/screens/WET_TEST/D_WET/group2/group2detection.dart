@@ -37,7 +37,7 @@ class _WetTestDGroupTwoDetectionScreenState
       id: 6, // ✅ FIXED: Changed from 4 to 6 (correct sequential ID)
       title: 'Group II Detection',
       procedure: 'O.S/Filtrate + dil. HCL (heat) + H2S gas or water ',
-      observation: 'Black or yellow  ppt',
+      observation: 'No Black ppt',
       options: ['Group-II is present', 'Group-II is absent'],
       correct: 'Group-II is absent',
     ),

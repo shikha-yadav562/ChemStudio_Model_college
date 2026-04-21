@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:chemstudio/DB/database_helper.dart';
 import '../group0/group0analysis.dart';
 import '../group_6/group6_detection.dart';
-import '../c_intro.dart';
 
 // --- Theme Constants ---
 const Color primaryBlue = Color(0xFF004C91);
@@ -35,9 +34,9 @@ class _Group5DetectionScreenState extends State<Group5DetectionScreen>
       title: 'Group V Detection',
       procedure:
           'O.S/Filtrate (Remove H₂S) + NH₄Cl(equal) + NH₄OH (till alkaline to litmus) + (NH₄)₂CO₃',
-      observation: 'White ppt',
+      observation: 'No ppt',
       options: ['Group-V is present', 'Group-V is Absent'],
-      correct: 'Group-V is present',
+      correct: 'Group-V is Absent',
     ),
   ];
 
@@ -110,14 +109,10 @@ class _Group5DetectionScreenState extends State<Group5DetectionScreen>
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: primaryBlue),
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroCScreen(),
-              ),
-              (route) => false,
-            );
-          },
+  Navigator.popUntil(context, (route) {
+    return route.settings.name == '/c_intro';
+  });
+},
         ),
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
