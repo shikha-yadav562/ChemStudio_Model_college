@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:chemstudio/DB/database_helper.dart';
 import 'package:flutter/material.dart';
 
 // Preliminary test screens
@@ -15,10 +16,19 @@ class WelcomeScreen extends StatefulWidget {
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
+  
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   String? selectedSalt;
+
+  @override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    await DatabaseHelper.instance.resetDatabase();
+  });
+}
 
   @override
   Widget build(BuildContext context) {

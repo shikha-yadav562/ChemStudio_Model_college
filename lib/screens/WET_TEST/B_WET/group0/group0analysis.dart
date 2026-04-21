@@ -72,16 +72,7 @@ class _WetTestBGroupZeroScreenState extends State<WetTestBGroupZeroScreen>
       parent: _animController,
       curve: Curves.easeInOut,
     );
-
-    _loadSavedAnswer();
     _animController.forward();
-  }
-
-  Future<void> _loadSavedAnswer() async {
-    final saved = await _dbHelper.getStudentAnswer(_tableName, _test.id);
-    if (saved != null) {
-      setState(() => _selectedOption = saved);
-    }
   }
 
   Future<void> _onOptionSelected(String option) async {
@@ -106,6 +97,7 @@ class _WetTestBGroupZeroScreenState extends State<WetTestBGroupZeroScreen>
         MaterialPageRoute(builder: (_) => const WetTestBGroupZeroCTScreen()),
       );
     } else {
+      await _dbHelper.clearGroupCTAnswers(_tableName, [2]);
       // ✅ Mark Group 0 as absent before navigating
       await _dbHelper.insertGroupDecision(
         salt: 'B',

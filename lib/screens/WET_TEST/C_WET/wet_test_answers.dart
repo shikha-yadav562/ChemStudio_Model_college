@@ -15,12 +15,12 @@ class ConfirmatoryTest {
 
 // -------------------- Group Detection --------------------
 const Map<int, GroupStatus> wetTestGroups = {
-  0: GroupStatus.absent,
+  0: GroupStatus.present,
   1: GroupStatus.absent,
   2: GroupStatus.absent,
   3: GroupStatus.present,
   4: GroupStatus.absent,
-  5: GroupStatus.present,
+  5: GroupStatus.absent,
   6: GroupStatus.absent,
 };
 

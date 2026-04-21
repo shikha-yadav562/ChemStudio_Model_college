@@ -52,27 +52,7 @@ class _Group4AnalysisScreenState extends State<Group4AnalysisScreen>
       parent: _animController,
       curve: Curves.easeInOut,
     );
-    _loadSavedAnswer();
     _animController.forward();
-  }
-
-  Future<void> _loadSavedAnswer() async {
-    final List<Map<String, dynamic>> data = await _dbHelper.getAnswers(
-      _tableName,
-    );
-
-    String? savedAnswer;
-
-    for (final row in data) {
-      if (row['question_id'] == _test.id) {
-        savedAnswer = row['student_answer'] as String?;
-        break;
-      }
-    }
-
-    setState(() {
-      _selectedOption = savedAnswer;
-    });
   }
 
   Future<void> _onOptionSelected(WetTestItem test, String selected) async {

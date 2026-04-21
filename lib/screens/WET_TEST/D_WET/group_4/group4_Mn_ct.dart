@@ -47,17 +47,7 @@ class _Mn2ConfirmedPageState extends State<Mn2ConfirmedPage>
       parent: _animController,
       curve: Curves.easeInOut,
     );
-    _loadSavedAnswer();
     _animController.forward();
-  }
-
-  Future<void> _loadSavedAnswer() async {
-    final answer = await _dbHelper.getStudentAnswer(_tableName, _test.id);
-    if (answer != null) {
-      setState(() {
-        _selectedOption = answer;
-      });
-    }
   }
 
   // ✅ Just select, don't save or navigate

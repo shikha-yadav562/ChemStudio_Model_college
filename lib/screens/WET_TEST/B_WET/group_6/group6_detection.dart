@@ -53,22 +53,9 @@ class _Group6DetectionState extends State<Group6Detection>
       parent: _animController,
       curve: Curves.easeInOut,
     );
-
-    _loadSavedAnswer();
     _animController.forward();
   }
 
-  Future<void> _loadSavedAnswer() async {
-    final saved = await _dbHelper.getStudentAnswer(
-      _tableName,
-      _tests[_index].id,
-    );
-    if (saved != null) {
-      setState(() {
-        _selectedOption = saved;
-      });
-    }
-  }
 
   /// Save ONLY detection answer
   Future<void> _onOptionSelected(WetTestItem test, String selected) async {
@@ -85,6 +72,7 @@ class _Group6DetectionState extends State<Group6Detection>
         MaterialPageRoute(builder: (_) => const Group6AnalysisScreen()),
       );
     } else if (_selectedOption == 'Group-VI is Absent') {
+      await _dbHelper.clearGroupCTAnswers(_tableName, [27]);
       // ✅ ADD THIS: Mark Group 6 as absent before navigating to Final Result
       await _dbHelper.insertGroupDecision(
         salt: 'B',

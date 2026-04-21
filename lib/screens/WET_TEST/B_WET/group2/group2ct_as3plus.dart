@@ -52,20 +52,7 @@ class _WetTestBGroupTwoCTAsScreenState extends State<WetTestBGroupTwoCTAsScreen>
       parent: _animController,
       curve: Curves.easeInOut,
     );
-    _loadSavedAnswer();
     _animController.forward();
-  }
-
-  Future<void> _loadSavedAnswer() async {
-    final studentAnswer = await _dbHelper.getStudentAnswer(
-      _tableName,
-      _test.id,
-    );
-    if (studentAnswer != null) {
-      setState(() {
-        _selectedOption = studentAnswer;
-      });
-    }
   }
 
   // ✅ FIXED: Just select, don't navigate

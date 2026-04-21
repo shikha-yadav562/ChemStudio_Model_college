@@ -49,24 +49,9 @@ class _DryTestCScreenState extends State<DryTestCScreen>
       curve: Curves.easeInOut,
     );
     _animController.forward();
-
-    _loadSavedAnswers();
     print("🧪 Preliminary Answers Received: ${widget.preliminaryAnswers}");
   }
 
-  Future<void> _loadSavedAnswers() async {
-    final data = await dbHelper.getAnswers(tableName);
-    if (data.isNotEmpty) {
-      setState(() {
-        for (var row in data) {
-          if (row['student_answer'] != null) {
-            _answers[row['question_id']] = row['student_answer'];
-          }
-        }
-      });
-      print("🧪 Dry Test Answers Loaded: $_answers");
-    }
-  }
 
   static List<TestItem> _generateTests() {
     return [

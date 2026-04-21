@@ -63,22 +63,10 @@ class _WetTestCGroupThreeDetectionScreenState
       parent: _animController,
       curve: Curves.easeInOut,
     );
-    _loadSavedAnswers();
     _animController.forward();
   }
 
   // ✅ FIXED: Now properly assigns savedAnswer to _selectedOption
-  Future<void> _loadSavedAnswers() async {
-    final data = await _dbHelper.getAnswers(_tableName);
-    setState(() {
-      final testId = _test.id;
-      final match = data.where((row) => row['question_id'] == testId);
-      final savedAnswer = match.isNotEmpty
-          ? match.first['student_answer']
-          : null;
-      _selectedOption = savedAnswer; // ✅ FIXED: Added this line
-    });
-  }
 
   Future<void> _onOptionSelected(WetTestItem test, String selected) async {
     setState(() {
@@ -97,6 +85,7 @@ class _WetTestCGroupThreeDetectionScreenState
         ),
       );
     } else if (_selectedOption == 'Group-III is Absent') {
+      await _dbHelper.clearGroupCTAnswers(_tableName, [12,13]);
       // ✅ ADD THIS: Mark Group 2 as absent before navigating
       await _dbHelper.insertGroupDecision(
         salt: 'C',
