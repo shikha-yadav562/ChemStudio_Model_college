@@ -1,6 +1,5 @@
 import 'package:chemstudio/DB/database_helper.dart';
 import 'package:chemstudio/models/group_status.dart';
-import 'package:chemstudio/screens/WET_TEST/B_WET/b_intro.dart';
 import 'package:chemstudio/screens/WET_TEST/B_WET/group0/group0analysis.dart';
 import 'package:chemstudio/screens/WET_TEST/B_WET/group_4/group4_analysis.dart';
 import 'package:chemstudio/screens/WET_TEST/B_WET/group_5/group5_detection.dart';
@@ -151,18 +150,7 @@ class _Group4DetectionScreenState extends State<Group4DetectionScreen>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroBScreen(),
-              ),
-              (route) => false,
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

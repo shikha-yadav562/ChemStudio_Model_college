@@ -4,7 +4,6 @@ import 'package:chemstudio/screens/WET_TEST/B_WET/WetTestBFinalResultScreen.dart
 import 'package:chemstudio/screens/WET_TEST/B_WET/group_4/group4_detection.dart';
 import 'package:flutter/material.dart';
 import '../group0/group0analysis.dart';
-import '../b_intro.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -199,14 +198,7 @@ class _WetTestBGroupThreeCTFeScreenState
             ),
           ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () => Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (_) => const WetTestIntroBScreen()),
-            (route) => false,
-          ),
-        ),
+        automaticallyImplyLeading: false,
       ),
       body: FadeTransition(
         opacity: _fadeSlide,

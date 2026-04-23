@@ -173,15 +173,12 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFE8F5F3),
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF00897B)),
-          onPressed: () => Navigator.pop(context),
-        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         title: const Text(
           'Results',
           style: TextStyle(color: Color(0xFF00897B), fontWeight: FontWeight.w600),
         ),
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:chemstudio/screens/WET_TEST/B_WET/group0/group0analysis.dart';
-import '../../welcome_screen.dart';
 
 
 const Color primaryBlue = Color(0xFF004C91);

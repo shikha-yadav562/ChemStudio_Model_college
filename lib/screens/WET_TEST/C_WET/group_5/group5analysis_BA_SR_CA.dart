@@ -24,14 +24,7 @@ class _Analysis_BA_SR_CAState extends State<Analysis_BA_SR_CA> {
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-    icon: const Icon(Icons.arrow_back, color: primaryBlue),
-    onPressed: () {
-  Navigator.popUntil(context, (route) {
-    return route.settings.name == '/c_intro';
-  });
-},
-  ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) =>
               const LinearGradient(colors: [accentTeal, primaryBlue])

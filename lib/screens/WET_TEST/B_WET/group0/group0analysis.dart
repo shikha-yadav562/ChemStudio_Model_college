@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:chemstudio/DB/database_helper.dart';
 import '0CT.dart';
 import 'package:chemstudio/screens/WET_TEST/B_WET/group1/group1detection.dart';
-import '../b_intro.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
