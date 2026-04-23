@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:chemstudio/screens/DRY_TEST/C/dry_test_c.dart';
 import 'package:chemstudio/screens/WET_TEST/C_WET/group0/group0analysis.dart';
-import '../../welcome_screen.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 
@@ -9,6 +9,12 @@ class WetTestIntroCScreen extends StatelessWidget {
   final Map<int, String>? preliminaryAnswers;
   final List<TestItem>? tests;
 
+  const WetTestIntroCScreen({
+    super.key,
+    this.userAnswers,
+    this.preliminaryAnswers,
+    this.tests,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(

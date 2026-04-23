@@ -18,15 +18,11 @@ class WetTestIntroBScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-              (route) => false,
-            );
-          },
-        ),
+  icon: const Icon(Icons.arrow_back, color: primaryBlue),
+  onPressed: () {
+    Navigator.pop(context); // ✅ go back to result screen
+  },
+),
         centerTitle: true,
         title: const Text(
           "Salt B : Wet Test",
