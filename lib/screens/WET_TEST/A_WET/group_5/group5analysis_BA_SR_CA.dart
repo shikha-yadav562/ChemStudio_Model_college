@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'group5_BA_ct.dart';
 import 'group5_CA_ct.dart';
 import 'group5_SR_ct.dart';
-import '../a_intro.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -25,16 +24,7 @@ class _saltAAnalysis_BA_SR_CAState extends State<saltAAnalysis_BA_SR_CA> {
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-    icon: const Icon(Icons.arrow_back, color: primaryBlue),
-    onPressed: () {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const WetTestIntroAScreen()), // Replace with your actual class name in c_intro.dart
-        (route) => false, // This clears the navigation stack
-      );
-    },
-  ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) =>
               const LinearGradient(colors: [accentTeal, primaryBlue])

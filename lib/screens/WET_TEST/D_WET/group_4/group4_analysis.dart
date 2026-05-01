@@ -1,5 +1,4 @@
 import 'package:chemstudio/DB/database_helper.dart';
-import 'package:chemstudio/screens/WET_TEST/D_WET/d_intro.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group0/group0analysis.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group_4/group4_Mn_ct.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group_4/group4_Ni_ct.dart';
@@ -156,18 +155,7 @@ class _Group4AnalysisScreenState extends State<Group4AnalysisScreen>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroDScreen(),
-              ),
-              (route) => false,
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

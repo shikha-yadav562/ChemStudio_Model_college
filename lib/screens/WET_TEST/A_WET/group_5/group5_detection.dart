@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:chemstudio/DB/database_helper.dart';
 import '../group0/group0analysis.dart';
 import '../group_6/group6_detection.dart';
-import '../a_intro.dart';
+
 
 // --- Theme Constants ---
 const Color primaryBlue = Color(0xFF004C91);
@@ -110,18 +110,7 @@ class _saltAGroup5DetectionScreenState extends State<saltAGroup5DetectionScreen>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroAScreen(),
-              ),
-              (route) => false,
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

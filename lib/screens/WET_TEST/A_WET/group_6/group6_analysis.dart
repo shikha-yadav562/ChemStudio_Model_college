@@ -3,7 +3,6 @@ import 'package:chemstudio/DB/database_helper.dart';
 import 'package:chemstudio/screens/WET_TEST/A_WET/group_6/group6_ct_MG.dart';
 import 'package:flutter/material.dart';
 import '../group0/group0analysis.dart';
-import '../a_intro.dart';
 
 // --- Theme Constants ---
 const Color primaryBlue = Color(0xFF004C91);
@@ -94,18 +93,7 @@ class _saltAGroup6AnalysisScreenState extends State<saltAGroup6AnalysisScreen>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroAScreen(),
-              ),
-              (route) => false,
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

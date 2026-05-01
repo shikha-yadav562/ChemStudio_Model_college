@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:chemstudio/DB/database_helper.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group0/group0analysis.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group_6/group6_analysis.dart';
-import 'package:chemstudio/screens/WET_TEST/D_WET/d_intro.dart';
 
 // --- Theme Constants ---
 const Color primaryBlue = Color(0xFF004C91);
@@ -107,18 +106,7 @@ class _Group6DetectionState extends State<Group6Detection>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroDScreen(),
-              ),
-              (route) => false,
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

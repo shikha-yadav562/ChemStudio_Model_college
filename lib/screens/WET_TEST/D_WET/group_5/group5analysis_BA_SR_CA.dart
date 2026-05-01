@@ -1,4 +1,3 @@
-import 'package:chemstudio/screens/WET_TEST/D_WET/d_intro.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group_5/group5_BA_ct.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group_5/group5_CA_ct.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group_5/group5_SR_ct.dart';
@@ -26,17 +25,7 @@ class _Analysis_BA_SR_CAState extends State<Analysis_BA_SR_CA> {
         elevation: 2,
         centerTitle: true,
         // 2. CUSTOM BACK ARROW LOGIC (Redirects to Intro D)
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroDScreen(),
-              ),
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

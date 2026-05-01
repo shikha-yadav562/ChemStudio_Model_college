@@ -120,7 +120,7 @@ class _WetTestBGroupZeroCTScreenState extends State<WetTestBGroupZeroCTScreen>
             colors: [accentTeal, primaryBlue],
           ).createShader(bounds),
           child: const Text(
-            'Salt C : Wet Test',
+            'Salt B : Wet Test',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,

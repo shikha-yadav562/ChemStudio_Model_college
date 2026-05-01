@@ -1,5 +1,4 @@
 import 'package:chemstudio/models/group_status.dart';
-import 'package:chemstudio/screens/WET_TEST/D_WET/d_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:chemstudio/DB/database_helper.dart';
 import '0CT.dart';
@@ -53,7 +52,8 @@ class _WetTestDGroupZeroScreenState extends State<WetTestDGroupZeroScreen>
     title: 'Analysis of Group Zero',
     procedure:
         'Take Original Solution (O.S.) in a test tube, add NaOH solution, and heat gently. Hold moist turmeric paper near the mouth of the test tube.',
-    observation: ' Evolution of NH4 gas , which turns moist turmeric paper brown / red ',
+    observation:
+        ' Evolution of NH4 gas , which turns moist turmeric paper brown / red ',
     options: ['Group Zero is present', 'Group Zero is absent'],
     correct: 'Group Zero is present',
   );
@@ -127,16 +127,7 @@ class _WetTestDGroupZeroScreenState extends State<WetTestDGroupZeroScreen>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => const WetTestIntroDScreen()),
-              (route) => false,
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],
@@ -210,21 +201,30 @@ class _WetTestDGroupZeroScreenState extends State<WetTestDGroupZeroScreen>
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton.icon(
-                  onPressed: _next,
-                  icon: const Icon(Icons.arrow_forward),
-                  label: const Text('Next'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryBlue,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton.icon(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back),
+                    label: const Text('Previous'),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: _next,
+                    icon: const Icon(Icons.arrow_forward),
+                    label: const Text('Next'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryBlue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
