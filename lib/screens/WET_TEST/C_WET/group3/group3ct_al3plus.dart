@@ -197,14 +197,7 @@ class _WetTestCGroupThreeCTAlScreenState
             ),
           ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-  Navigator.popUntil(context, (route) {
-    return route.settings.name == '/c_intro';
-  });
-},
-        ),
+        automaticallyImplyLeading: false,
       ),
       body: FadeTransition(
         opacity: _fadeSlide,

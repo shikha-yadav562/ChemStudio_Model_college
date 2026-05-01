@@ -3,7 +3,6 @@
 import 'package:chemstudio/DB/database_helper.dart';
 import 'package:chemstudio/screens/WET_TEST/C_WET/group0/group0analysis.dart';
 import 'package:chemstudio/screens/WET_TEST/C_WET/group1/group1ct_pb2plus.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 // --- Theme Constants (Must match existing design) ---
@@ -103,14 +102,7 @@ class _WetTestCGroupOneAnalysisScreenState
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-  Navigator.popUntil(context, (route) {
-    return route.settings.name == '/c_intro';
-  });
-},
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

@@ -105,6 +105,7 @@ class _PreliminaryTestBScreenState extends State<PreliminaryTestBScreen> {
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
+        automaticallyImplyLeading: _index != 1,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

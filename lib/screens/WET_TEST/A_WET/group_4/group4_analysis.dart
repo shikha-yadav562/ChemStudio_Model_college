@@ -4,7 +4,6 @@ import 'group4_Ni_ct.dart';
 import 'group4_Co_ct.dart';
 import 'group4_Mn_ct.dart';
 import 'group4_Zn_ct.dart';
-import '../a_intro.dart';
 import 'package:chemstudio/screens/WET_TEST/A_WET/group0/group0analysis.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
@@ -156,18 +155,7 @@ class _saltAGroup4AnalysisScreenState extends State<saltAGroup4AnalysisScreen>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroAScreen(),
-              ),
-              (route) => false,
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

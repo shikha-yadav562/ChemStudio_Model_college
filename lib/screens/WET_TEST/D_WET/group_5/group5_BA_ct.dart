@@ -2,7 +2,6 @@
 import 'package:chemstudio/DB/database_helper.dart';
 import 'package:chemstudio/models/group_status.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/WetTestDFinalResultScreen.dart';
-import 'package:chemstudio/screens/WET_TEST/D_WET/d_intro.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group0/group0analysis.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group_6/group6_detection.dart';
 import 'package:flutter/material.dart';
@@ -197,14 +196,7 @@ class _Group5CTBaScreenState extends State<Group5CTBaScreen>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () => Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (_) => const WetTestIntroDScreen()),
-            (route) => false,
-          ),
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

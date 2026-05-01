@@ -5,7 +5,6 @@ import 'package:chemstudio/screens/WET_TEST/A_WET/group_4/group4_detection.dart'
 import 'package:flutter/material.dart';
 import 'package:chemstudio/screens/WET_TEST/A_WET/group0/group0analysis.dart';
 // DatabaseHelper, WetTestItem, etc.
-import '../a_intro.dart';
 import 'group3analysis.dart';
 
 // --- Theme Constants ---
@@ -167,18 +166,7 @@ class _WetTestAGroupThreeDetectionScreenState
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroAScreen(),
-              ),
-              (route) => false,
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

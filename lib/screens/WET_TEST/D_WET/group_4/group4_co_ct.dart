@@ -1,7 +1,6 @@
 import 'package:chemstudio/DB/database_helper.dart';
 import 'package:chemstudio/models/group_status.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/WetTestDFinalResultScreen.dart';
-import 'package:chemstudio/screens/WET_TEST/D_WET/d_intro.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group0/group0analysis.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group_5/group5_detection.dart';
 import 'package:flutter/material.dart';
@@ -199,14 +198,7 @@ class _Co2ConfirmedPageState extends State<Co2ConfirmedPage>
             ),
           ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () => Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (_) => const WetTestIntroDScreen()),
-            (route) => false,
-          ),
-        ),
+        automaticallyImplyLeading: false,
       ),
       body: FadeTransition(
         opacity: _fadeSlide,

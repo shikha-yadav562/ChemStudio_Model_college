@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chemstudio/screens/WET_TEST/D_WET/group0/group0analysis.dart'; // ⚠️ TEMPORARY: Added for database reset
-import '../../welcome_screen.dart';
+
 
 const Color primaryBlue = Color(0xFF004C91);
 
@@ -19,11 +19,7 @@ class WetTestIntroDScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: primaryBlue),
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-              (route) => false,
-            );
+            Navigator.pop(context);
           },
         ),
         centerTitle: true,

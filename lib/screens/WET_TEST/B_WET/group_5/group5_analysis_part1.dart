@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:chemstudio/screens/WET_TEST/B_WET/group_5/group5analysis_BA_SR_CA.dart';
-import 'package:chemstudio/screens/WET_TEST/B_WET/b_intro.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -140,19 +139,7 @@ class _Group5AnalysisPart1State extends State<Group5AnalysisPart1>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            // FIX: Navigate back to Intro and clear navigation history
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroBScreen(),
-              ),
-              (route) => false,
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

@@ -106,16 +106,16 @@ class _DryTestAScreenState extends State<DryTestAScreen>
     } else {
       if (widget.isReviewMode) {
         print("📊 Review Mode Complete - Dry Test Answers: $_answers");
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => SaltAResultScreen(
-              userAnswers: _answers,
-              tests: _tests,
-              preliminaryAnswers: widget.preliminaryAnswers,
-            ),
-          ),
-        );
+        Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => SaltAResultScreen(
+      userAnswers: _answers,
+      tests: _tests,
+      preliminaryAnswers: widget.preliminaryAnswers,
+    ),
+  ),
+);
       } else {
         await Future.delayed(const Duration(milliseconds: 200));
         print("🧪 Test Complete: Moving to Possible Radicals Selection");
@@ -134,26 +134,25 @@ class _DryTestAScreenState extends State<DryTestAScreen>
   }
 
   void _prev() {
-    if (_index == 0) {
-      if (widget.isReviewMode) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => SaltAResultScreen(
-              userAnswers: _answers,
-              tests: _tests,
-              preliminaryAnswers: widget.preliminaryAnswers,
-            ),
-          ),
-        );
-      }
-    } else {
-      setState(() {
-        _index--;
-        _animController.forward(from: 0);
-      });
-    }
+  if (_index == 0) {
+    // ✅ Go to Nature Test (Solubility)
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => PreliminaryTestAScreen(
+          startIndex: 1, // 👈 Nature Test page
+          isReviewMode: widget.isReviewMode,
+          preliminaryAnswers: widget.preliminaryAnswers,
+        ),
+      ),
+    );
+  } else {
+    setState(() {
+      _index--;
+      _animController.forward(from: 0);
+    });
   }
+}
 
   @override
   void dispose() {
@@ -172,6 +171,7 @@ class _DryTestAScreenState extends State<DryTestAScreen>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],
@@ -815,7 +815,7 @@ class _SaltAResultScreenState extends State<SaltAResultScreen>
                       height: 50,
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => const WetTestIntroAScreen(),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../group0/group0analysis.dart';
 import 'group3ct_fe3plus.dart';
 import 'group3ct_al3plus.dart';
-import '../a_intro.dart';
+
 
 // --- Theme Constants ---
 const Color primaryBlue = Color(0xFF004C91);
@@ -143,18 +143,7 @@ class _WetTestAGroupThreeAnalysisScreenState
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroAScreen(),
-              ),
-              (route) => false,
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

@@ -1,7 +1,6 @@
 // E:\flutter chemistry\wet\wet\lib\C\group1\group1detection.dart
 
 import 'package:chemstudio/models/group_status.dart';
-import 'package:chemstudio/screens/WET_TEST/D_WET/d_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:chemstudio/DB/database_helper.dart';
 import '../group0/group0analysis.dart';
@@ -125,18 +124,7 @@ class _WetTestDGroupOneDetectionScreenState
           backgroundColor: Colors.white,
           elevation: 2,
           centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: primaryBlue),
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WetTestIntroDScreen(),
-                ), // Replace with your actual class name in c_intro.dart
-                (route) => false, // This clears the navigation stack
-              );
-            },
-          ),
+          automaticallyImplyLeading: false,
           title: ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
               colors: [accentTeal, primaryBlue],

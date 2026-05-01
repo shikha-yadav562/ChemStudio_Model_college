@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:chemstudio/DB/database_helper.dart';
 import 'package:chemstudio/models/group_status.dart';
 import 'package:chemstudio/screens/WET_TEST/C_WET/wet_test_answers.dart';
+import 'package:chemstudio/screens/welcome_screen.dart';
 
 const Color primaryBlue = Color(0xFF004C91);
 const Color accentTeal = Color(0xFF00A6A6);
@@ -50,7 +51,6 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
     {'ion': 'Mg2+', 'group': 6, 'questionId': 27},
   ];
 
-  // ── Correct answers for Salt C ──────────────────────────────────
   static const Map<int, GroupStatus> _correctGroups = {
     0: GroupStatus.present,
     1: GroupStatus.absent,
@@ -98,7 +98,6 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
     studentGroups = await db.getStudentGroupDecisions(widget.salt);
     await _identifySelectedIons();
 
-    // Load all CT answers for recheck
     final Map<int, String?> ctAnswers = {};
     for (final ids in _groupCTIds.values) {
       for (final id in ids) {
@@ -150,7 +149,6 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
       .replaceAll('3+', '³⁺')
       .replaceAll('4+', '⁴⁺');
 
-  // ── Recheck helper ─────────────────────────────────────────────
   String? _studentCTForGroup(int group) {
     for (final id in _groupCTIds[group] ?? []) {
       final ans = _studentCTAnswers[id];
@@ -175,15 +173,12 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFE8F5F3),
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF00897B)),
-          onPressed: () => Navigator.pop(context),
-        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         title: const Text(
           'Results',
           style: TextStyle(color: Color(0xFF00897B), fontWeight: FontWeight.w600),
         ),
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -250,31 +245,63 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
 
             const SizedBox(height: 16),
 
-            // ── RECHECK BUTTON ─────────────────────────────
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                icon: Icon(
-                  _showRecheck
-                      ? Icons.keyboard_arrow_up
-                      : Icons.fact_check_outlined,
-                ),
-                label: Text(
-                  _showRecheck ? 'Hide Recheck' : 'Recheck All Groups',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                onPressed: () =>
-                    setState(() => _showRecheck = !_showRecheck),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: primaryBlue,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-            ),
+           // ── RECHECK + HOME BUTTONS side by side ────────
+Row(
+  children: [
+    Expanded(
+      child: ElevatedButton.icon(
+        icon: Icon(
+          _showRecheck
+              ? Icons.keyboard_arrow_up
+              : Icons.fact_check_outlined,
+        ),
+        label: Text(
+          _showRecheck ? 'Hide Recheck' : 'Recheck',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+        ),
+        onPressed: () =>
+            setState(() => _showRecheck = !_showRecheck),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primaryBlue,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          minimumSize: const Size(0, 56),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
+    ),
+    const SizedBox(width: 12),
+    Expanded(
+      child: OutlinedButton.icon(
+        icon: const Icon(Icons.home, color: Color(0xFF00897B), size: 22),
+        label: const Text(
+          'HOME',
+          style: TextStyle(
+            color: Color(0xFF00897B),
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
+        onPressed: () => Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (_) => const WelcomeScreen()),
+          (route) => false,
+        ),
+        style: OutlinedButton.styleFrom(
+          side: const BorderSide(color: Color(0xFF00897B), width: 2),
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          minimumSize: const Size(0, 56),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
+    ),
+  ],
+),
 
             // ── RECHECK PANEL ──────────────────────────────
             if (_showRecheck) ...[
@@ -283,26 +310,6 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
             ],
 
             const SizedBox(height: 16),
-
-            // ── BACK BUTTON ────────────────────────────────
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                icon: const Icon(Icons.arrow_back, color: Color(0xFF00897B)),
-                label: const Text(
-                  'BACK',
-                  style: TextStyle(
-                    color: Color(0xFF00897B),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () => Navigator.pop(context),
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Color(0xFF00897B), width: 2),
-                  padding: const EdgeInsets.symmetric(vertical: 18),
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -329,7 +336,8 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
         boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 5, offset: Offset(0, 2)),
+          BoxShadow(
+              color: Colors.black12, blurRadius: 5, offset: Offset(0, 2)),
         ],
       ),
       child: Column(
@@ -337,9 +345,11 @@ class _WetTestCFinalResultScreenState extends State<WetTestCFinalResultScreen> {
         children: [
           // Header
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(colors: [accentTeal, primaryBlue]),
+              gradient:
+                  const LinearGradient(colors: [accentTeal, primaryBlue]),
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(14)),
             ),

@@ -6,7 +6,7 @@ import 'package:chemstudio/DB/database_helper.dart';
 import '../group0/group0analysis.dart';
 import '../group2/group2detection.dart';
 import 'group1analysis.dart';
-import '../a_intro.dart';
+
 
 // --- Theme Constants ---
 const Color primaryBlue = Color(0xFF004C91);
@@ -126,18 +126,7 @@ class _WetTestAGroupOneDetectionScreenState
           backgroundColor: Colors.white,
           elevation: 2,
           centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: primaryBlue),
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WetTestIntroAScreen(),
-                ), // Replace with your actual class name in a_intro.dart
-                (route) => false, // This clears the navigation stack
-              );
-            },
-          ),
+          automaticallyImplyLeading: false,
           title: ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
               colors: [accentTeal, primaryBlue],

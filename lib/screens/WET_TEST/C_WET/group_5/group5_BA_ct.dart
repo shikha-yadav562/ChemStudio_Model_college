@@ -197,14 +197,7 @@ class _Group5CTBaScreenState extends State<Group5CTBaScreen>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-  Navigator.popUntil(context, (route) {
-    return route.settings.name == '/c_intro';
-  });
-},
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],

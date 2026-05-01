@@ -52,7 +52,6 @@ class _DryTestBScreenState extends State<DryTestBScreen>
     print("🧪 Preliminary Answers Received: ${widget.preliminaryAnswers}");
   }
 
-
   static List<TestItem> _generateTests() {
     return [
       TestItem(
@@ -131,26 +130,25 @@ class _DryTestBScreenState extends State<DryTestBScreen>
   }
 
   void _prev() {
-    if (_index == 0) {
-      if (widget.isReviewMode) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => SaltBResultScreen(
-              userAnswers: _answers,
-              tests: _tests,
-              preliminaryAnswers: widget.preliminaryAnswers,
-            ),
-          ),
-        );
-      }
-    } else {
-      setState(() {
-        _index--;
-        _animController.forward(from: 0);
-      });
-    }
+  if (_index == 0) {
+    // ✅ Go back to Nature Test (Solubility)
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => PreliminaryTestBScreen(
+          startIndex: 1, // 👈 Nature Test
+          isReviewMode: widget.isReviewMode,
+          preliminaryAnswers: widget.preliminaryAnswers,
+        ),
+      ),
+    );
+  } else {
+    setState(() {
+      _index--;
+      _animController.forward(from: 0);
+    });
   }
+}
 
   @override
   void dispose() {
@@ -169,6 +167,7 @@ class _DryTestBScreenState extends State<DryTestBScreen>
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],
@@ -811,7 +810,7 @@ class _SaltBResultScreenState extends State<SaltBResultScreen>
                       height: 50,
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => const WetTestIntroBScreen(),

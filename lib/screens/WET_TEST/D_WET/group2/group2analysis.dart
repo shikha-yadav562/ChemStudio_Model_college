@@ -1,7 +1,6 @@
 // E:\flutter chemistry\wet\wet\lib\C\group2\group2analysis.dart
 
 import 'package:chemstudio/DB/database_helper.dart';
-import 'package:chemstudio/screens/WET_TEST/D_WET/d_intro.dart';
 import 'package:flutter/material.dart';
 import '../group0/group0analysis.dart'; // WetTestItem, DatabaseHelper
 import 'group2ct_cu2plus.dart';
@@ -101,18 +100,7 @@ class _WetTestDGroupTwoAnalysisScreenState
         backgroundColor: Colors.white,
         elevation: 2,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryBlue),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WetTestIntroDScreen(),
-              ), // Replace with your actual class name in c_intro.dart
-              (route) => false, // This clears the navigation stack
-            );
-          },
-        ),
+        automaticallyImplyLeading: false,
         title: ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [accentTeal, primaryBlue],
